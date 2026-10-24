@@ -1,5 +1,6 @@
 %YAML 1.2
 ---
+# Generated from infra/templates/RenodePlatform.yaml.in; run just source::generate.
 # Renode platform descriptions.
 # Follows renode src/Renode/PlatformDescription/Syntax/Grammar.cs,
 # with comments and strings as split out by PlatformDescription/PreLexer.cs.
@@ -9,11 +10,11 @@ file_extensions:
 scope: source.renode.repl
 
 variables:
-  ident: '[A-Za-z][A-Za-z0-9_]*'
+  ident: '[A-Za-z](?:(?:[A-Za-z0-9]|_))*'
   # Grammar.cs MakeKeyword(); identifiers may not be one of these.
   keyword: '(?:using|new|as|preinit|init|reset|local|true|True|false|False|none|empty)\b'
-  type_name: '{{ident}}(?:\.{{ident}})*'
-  number: '(?:0x\h[\h_]*|\d[\d_]*)'
+  type_name: '[A-Za-z](?:(?:[A-Za-z0-9]|_))*(?:\.[A-Za-z](?:(?:[A-Za-z0-9]|_))*)*'
+  number: '(?:0x(?:[0123456789ABCDEFabcdef])+(?:_(?:[0123456789ABCDEFabcdef])+)*|\d+(?:_\d+)*)'
   monitor_keyword: '(preinit|init|reset)(?:\s+(add))?\s*(:)'
 
 contexts:
@@ -128,7 +129,7 @@ contexts:
     - include: numbers
     - match: '{{ident}}(?:\.{{ident}})+|(?<![\w.])\.{{ident}}'
       scope: constant.other.enum.renode-repl
-    - match: '->'
+    - match: '\->'
       scope: keyword.operator.arrow.renode-repl
     - match: '\|'
       scope: keyword.operator.multiplex.renode-repl
@@ -196,7 +197,7 @@ contexts:
         3: constant.numeric.renode-repl
 
   numbers:
-    - match: '-?0x\h[\h_]*\b'
+    - match: '(?:\-)?0x(?:[0123456789ABCDEFabcdef])+(?:_(?:[0123456789ABCDEFabcdef])+)*\b'
       scope: constant.numeric.integer.hexadecimal.renode-repl
-    - match: '-?\b\d[\d_]*(?:\.\d+)?\b'
+    - match: '(?:\-)?\b\d+(?:_\d+)*(?:\.\d+)?\b'
       scope: constant.numeric.decimal.renode-repl

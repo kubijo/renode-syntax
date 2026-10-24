@@ -13,9 +13,10 @@ from kubijo/sublime-merge-plugins at commit
 
   https://github.com/kubijo/sublime-merge-plugins
 
-Renode's root LICENSE and the Grammar.cs, Tokenizer.cs, and Monitor.cs headers
-declare the MIT license. The latter two files also credit Realtime Embedded.
-Renode-derived material retains these applicable upstream notices:
+Renode's root LICENSE covers scripts/monitor.py. The Grammar.cs, PreLexer.cs,
+Tokenizer.cs, Monitor.cs, and command-class headers declare the MIT license;
+some also credit Realtime Embedded. Renode-derived material retains these
+applicable upstream notices:
 
 Copyright (c) Antmicro <www.antmicro.com>
 Copyright (c) 2010-2026 Antmicro

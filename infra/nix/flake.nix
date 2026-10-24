@@ -72,6 +72,7 @@ let
             ".gitignore"
             "LICENSE"
             "NOTICE"
+            "*.in"
           ];
         };
 
@@ -92,13 +93,19 @@ let
             ".gitignore"
             "LICENSE"
             "NOTICE"
+            "*.in"
           ];
         };
 
         check.prepare = prepareEnvironment;
       };
       commands = import ./commands.nix {
-        inherit pkgs project pythonTools;
+        inherit
+          pkgs
+          project
+          pythonTools
+          nodejs
+          ;
       };
     in
     {
@@ -119,6 +126,7 @@ let
           ++ lib.attrValues commands
           ++ [
             basedpyright
+            nodejs
             pkgs.bash
             pkgs.cargo
             pkgs.clippy

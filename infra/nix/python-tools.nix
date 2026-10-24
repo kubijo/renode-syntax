@@ -11,6 +11,12 @@ let
     pkgs.lib.composeManyExtensions [
       pyproject-build-systems.overlays.wheel
       (workspace.mkPyprojectOverlay { sourcePreference = "wheel"; })
+      (final: previous: {
+        tree-sitter = previous.tree-sitter.overrideAttrs (old: {
+          nativeBuildInputs =
+            (old.nativeBuildInputs or [ ]) ++ final.resolveBuildSystem { setuptools = [ ]; };
+        });
+      })
     ]
   );
 in

@@ -1,0 +1,1571 @@
+{
+  "schema_version": 1,
+  "pins": {
+    "renode": {
+      "repository": "https://github.com/renode/renode.git",
+      "revision": "04cafbb29ea64a1547cd3bd1232f8c126bf7f755",
+      "paths": [
+        "LICENSE",
+        "scripts/monitor.py",
+        "src/Renode/PlatformDescription/PreLexer.cs",
+        "src/Renode/PlatformDescription/Syntax/Grammar.cs"
+      ]
+    },
+    "infrastructure": {
+      "repository": "https://github.com/renode/renode-infrastructure.git",
+      "revision": "32dce7d28bc267761b3ef0e49eaf1720be54b265",
+      "paths": [
+        "licenses/MIT.txt",
+        "src/Emulator/Extensions/UserInterface/Commands",
+        "src/Emulator/Extensions/UserInterface/Monitor.cs",
+        "src/Emulator/Extensions/UserInterface/Tokenizer"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "repository": "renode",
+      "path": "LICENSE",
+      "sha256": "f81b19ff9bc4b30fae51a59452ed227cbf35af683c50e7e5b443fd4eb04881c7"
+    },
+    {
+      "repository": "renode",
+      "path": "scripts/monitor.py",
+      "sha256": "ce2b95597758cec868949e203df1d1a750e8d19ec8322e4ca5804c50c47ea551"
+    },
+    {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/PreLexer.cs",
+      "sha256": "c620b64654acf710e45af8fce21c4baf7714c455cbdaa9f6de98394003f5664f"
+    },
+    {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+      "sha256": "4df0ff9a1d98c846914c25b82c0b9237ef3596efcd80147429cf183e0177f9b7"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "licenses/MIT.txt",
+      "sha256": "8f71659370c5268d9a1dc962a46232540e8fca63462586d8efaa95aab492a208"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/AllowPrivatesCommand.cs",
+      "sha256": "ea11435f83f469bd717ab5b641fd33eddb8a72f8e49b3dfd1d455e4322682d4c"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/AnalyzersCommand.cs",
+      "sha256": "29fc9de3094695b2601568e32f5ea89e30b64419c942dd46f6d8f22330babf3c"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/AutoSaveCommand.cs",
+      "sha256": "9b9360ce5af84590f9edc018f926f6a9832e8322a1c80d786f614deb258698ab"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/Command.cs",
+      "sha256": "453cb04f114519698a3b8b300dbb550939b96476dfa8de50dc6473f5698d4dfd"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/CommandAttributes.cs",
+      "sha256": "fcd9cb3fa363a32a6361b54f6f87afb273f590a047a1d5c3ed2a00f21a3f286d"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/CreatePlatformCommand.cs",
+      "sha256": "c4c120ac495c4fe190558dc1e9ab8086f063e8962bc67eeb83b85a17f581468d"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/DisplayImageCommand.cs",
+      "sha256": "d971b1b4dba35cdff9975534551e307464f7c7f3e80ec4828857ea956a532519"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/ExecuteCommand.cs",
+      "sha256": "0b681a26e522844c9afb74e214094bb600a162a5c81f54a5c7162a84923102d6"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/HelpCommand.cs",
+      "sha256": "fc9a9b2226ed680ad89851ea6e7a2ae5b56d0399258324581f526752babe3d9f"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/IncludeFileCommand.cs",
+      "sha256": "3c082f47b3dfb5cfe5d193e107079393ca7366ad8df32afd5b7821d6b1902332"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/LastLogCommand.cs",
+      "sha256": "35c4c8c1a6dad37231a306ef679e7ece92358ad550a033f2031665626a0039f4"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/LogCommand.cs",
+      "sha256": "b1a33961dd19a37acbfaf789282037d58b641424d59885cb0945728153b9570c"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/LogLevelCommand.cs",
+      "sha256": "dd91f3b16c41d4c03204cc8d7ffd1ceb5952e604ae85d0607900b560e8ab18fe"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/LoggerFileCommand.cs",
+      "sha256": "162bd551a76eaef68f39ceacde108ac935432fad60c0637a0669c1e4d51cda45"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/MachCommand.cs",
+      "sha256": "eec4d4a418dc1288ef9a1ea65357c9461d9ef9476cbe2dec19138d4c94aaccef"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/MonitorPathCommand.cs",
+      "sha256": "8e208165c43c668952d6759d4fe8cb73d3a0064cc25f9e88500e98a64407ef14"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/NetworkLoggerCommand.cs",
+      "sha256": "1677615228ea2ae82696a87b2762100a7d96ec169d8dda8849803f854f754bd4"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/NumbersModeCommand.cs",
+      "sha256": "f72f65f51c4037d77fbebeba328316717f4f49e13d3b84319f04a69fa640555d"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/PauseCommand.cs",
+      "sha256": "3443229208201662cc9c7a0e09c65e65375e1e295cab21d63485fdd9586f61ea"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/PeripheralsCommand.cs",
+      "sha256": "cf92e0aca238b8f82c9b54ce008e40735eb1e89625fd40812a4f7692a327bcdf"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/PrintenvCommand.cs",
+      "sha256": "ed874bda200ef406feca5a29c78a85c69a572963e091614aaf0b2ece4890c5d3"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/PythonExecuteCommand.cs",
+      "sha256": "e3ed94e872af5f43e83a2ca2014ec166df9d8da2159416ecb24fb08217a32411"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/QuitCommand.cs",
+      "sha256": "42bae19de4cd53f4c8626ec0cdaf0971d421cb6a85fc9909d12207ce33840d10"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/RequireVariableCommand.cs",
+      "sha256": "30074289c3f0ec6e7dbbadb0a285dca1b1aca0e6c38a9b3f1b98b7af3230627d"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/ResdCommand.cs",
+      "sha256": "d5eaa892b17e07181a72b613d134504b226c203be14867c5b789ec66649b682a"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/ReverseExecModeCommand.cs",
+      "sha256": "ddff8a7124810e63f0b327584291931ea1dfe4b807784c77656754282efc3c54"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/SetAndRevertAfterCommand.cs",
+      "sha256": "ea392fb483a593e45d20109386837890f44b053fdbecb613cb962a3e4c7437b4"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/SetCommand.cs",
+      "sha256": "47f967f6359c44462429678d33cf0bbc8d3581cbcef4599d8ef5db84d839dc21"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/ShowBackendAnalyzerCommand.cs",
+      "sha256": "35e0d7bde609dc7f184a8c986190642103cb20833c590de2ab2f4e187e3c7115"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/StartCommand.cs",
+      "sha256": "e28b4470388445637f06c298e346ea639d7af9134fa0f04a7188311a4bd0bcdb"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/StringCommand.cs",
+      "sha256": "ddf5e047ff6278f2bdab5fb9cd47731fdbb706b82d24dc906fc168f47d3ef3fa"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/TagsCommand.cs",
+      "sha256": "bfb49e08592748853ce675e1d06c57f4160d3bee824adea9ceaa611b05aa4632"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/TimeCommand.cs",
+      "sha256": "b6585ba052128d507fb32957a2ad12c7b4859c4980a76bbe4a3aee91309cd6a4"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/UsingCommand.cs",
+      "sha256": "85825e005e8934f77407341d834608d79cf1c05f67a9063222d4df115e37dc6d"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/VerboseCommand.cs",
+      "sha256": "0a212a96cb905ccbe9a1c10cee3b2250de6275363014217d939f16417fb08707"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/VersionCommand.cs",
+      "sha256": "f7ed548022fe2b0121c1195a4496eb300cbd0ff682a6d6cd1cde0afea906ebfc"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Commands/WatchCommand.cs",
+      "sha256": "859dd1981452cd5d54f9614108fb79769edb78a9f55b7d795a4abf11a7ae5b00"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Monitor.cs",
+      "sha256": "2fee368936ecd85b134a2f1d2c6405da1cb7770782833432b293ad4857b70fed"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/AbsoluteRangeToken.cs",
+      "sha256": "1bdc3b78afce756da3fb3cd0c5d6cf6da862cfa710cd98bd2df16d75ddb3a357"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/BooleanToken.cs",
+      "sha256": "40b8260cc33a40a8a700c683712abd4182ccc023f85bf39f319d9e6064be8f7b"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/CommaToken.cs",
+      "sha256": "3e5ea855943e60939c53f1fa00a0058cada70302a9897e0a838cd9f4087b1845"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/CommandSplit.cs",
+      "sha256": "20a4fd9030c0e0f97b17da1dbeb9f08300b3e097256c1b976ee5ff52077d245c"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/CommentToken.cs",
+      "sha256": "73e3e09ddbbf68cfb87ebbfdf944b642320fee190d5f0ec97606b9b96e270aae"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/ConditionalEqualityToken.cs",
+      "sha256": "68e2058e5a2565af27729a40459367035ef1d8dc96e828988f25e9e117371c01"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/DecimalIntegerToken.cs",
+      "sha256": "265b91213def3339bd3f90bcccf73ca572867792b82aba5d2841688b81e470af"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/EqualityToken.cs",
+      "sha256": "e9dd00d6aefc6b444bc29f8581aeceecaeb8a563228c38a91484d07315b3de1e"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/ExecutionToken.cs",
+      "sha256": "4d3d1c3bffa2ed3fe8705a7b8643fad16670ac6ec21c82593287096a5982ccf8"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/FloatToken.cs",
+      "sha256": "79cca58862e9a8f810a7006d9fee648494f7ae74dec9f686c3ecdbd0a4d0ccf1"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/HexToken.cs",
+      "sha256": "c8ee4e09ffcee38e3dc695bf2e09ba76599083c28f6decf6d63b911db3c49f31"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/LeftBraceToken.cs",
+      "sha256": "9eb34882db9ea3ff67eb196618afdfa6c30cfbed67fec2eaf6fa35e218c53853"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/LiteralToken.cs",
+      "sha256": "a5b40411a7d016485ac2bbd5cb28db89dfbd4d282e1350aef32822a4f628229b"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/MultilineStringTerminatorToken.cs",
+      "sha256": "8494cec8e0b93c2feea02dcdb582886615e39976c7aa22b7b297caadf0cffe17"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/MultilineStringToken.cs",
+      "sha256": "42dabe7624fe9eec4d9658ab885985da7b260e3d2f5f223add53cf3964ef030f"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/NullToken.cs",
+      "sha256": "845a6d6782571ff777991c5c2a6dd78fae4be54471be9b60c37312f1873c1d7b"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/PathToken.cs",
+      "sha256": "e323ce31d1ea75bf282ee3ba96e5d4c33519a0f31f50926e407a84efcc787870"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/RangeToken.cs",
+      "sha256": "c85e94d363ccd54f53eb3aa2f2c2c3dc8106f76d267fa0963c4cd77b935df297"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/RelativeRangeToken.cs",
+      "sha256": "d7b983f22ed8585e24dd952bcf3b14f3c5188598677c2135ec4536591ae4e893"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/RightBraceToken.cs",
+      "sha256": "e5c7e0c44e2bb89bc693d67cb8a17ecd9aa1da828948808fae275eb8f2c999c1"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/StringToken.cs",
+      "sha256": "d3e37edc8cbe5ebc3fcae876feaa22deba092bd49d61c16d029c41aab50ebff2"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/TimeIntervalToken.cs",
+      "sha256": "755003dfc3ba86f48d7825da49195518a11f23c78b50d2c6f24e36cf0f90c60e"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Token.cs",
+      "sha256": "63f16e42c5dd30d8be7f7d247b00e163f0b14927ea06ef8ada798b5dae7c0b0d"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/TokenizationResult.cs",
+      "sha256": "30bcebfab9227bedf417130b0d0c7d4b46347afa9a142fcd4e144862b5872002"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+      "sha256": "6b8bd28a64fb5f2ae6b52b2c0b239149652691e9cb312b2b196f71cfdce24f5e"
+    },
+    {
+      "repository": "infrastructure",
+      "path": "src/Emulator/Extensions/UserInterface/Tokenizer/VariableToken.cs",
+      "sha256": "9c81462e80c19e6059b873a8cd270adf4dad421315f0408d45242d0af50fd10c"
+    }
+  ],
+  "commands": [
+    {
+      "name": "alias",
+      "registration": "monitor-registration",
+      "symbol": "SetCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Monitor.cs",
+        "line": 856
+      },
+      "definition": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/SetCommand.cs",
+        "line": 20
+      }
+    },
+    {
+      "name": "allowPrivates",
+      "registration": "base-constructor",
+      "symbol": "AllowPrivatesCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/AllowPrivatesCommand.cs",
+        "line": 18
+      },
+      "definition": null
+    },
+    {
+      "name": "analyzers",
+      "registration": "base-constructor",
+      "symbol": "AnalyzersCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/AnalyzersCommand.cs",
+        "line": 21
+      },
+      "definition": null
+    },
+    {
+      "name": "autoSave",
+      "registration": "base-constructor",
+      "symbol": "AutoSaveCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/AutoSaveCommand.cs",
+        "line": 149
+      },
+      "definition": null
+    },
+    {
+      "name": "createPlatform",
+      "registration": "base-constructor",
+      "symbol": "CreatePlatformCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/CreatePlatformCommand.cs",
+        "line": 20
+      },
+      "definition": null
+    },
+    {
+      "name": "currentTime",
+      "registration": "base-constructor",
+      "symbol": "TimeCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/TimeCommand.cs",
+        "line": 16
+      },
+      "definition": null
+    },
+    {
+      "name": "displayImage",
+      "registration": "base-constructor",
+      "symbol": "DisplayImageCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/DisplayImageCommand.cs",
+        "line": 23
+      },
+      "definition": null
+    },
+    {
+      "name": "execute",
+      "registration": "monitor-registration",
+      "symbol": "ExecuteCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Monitor.cs",
+        "line": 859
+      },
+      "definition": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/ExecuteCommand.cs",
+        "line": 21
+      }
+    },
+    {
+      "name": "help",
+      "registration": "base-constructor",
+      "symbol": "HelpCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/HelpCommand.cs",
+        "line": 20
+      },
+      "definition": null
+    },
+    {
+      "name": "include",
+      "registration": "base-constructor",
+      "symbol": "IncludeFileCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/IncludeFileCommand.cs",
+        "line": 22
+      },
+      "definition": null
+    },
+    {
+      "name": "lastLog",
+      "registration": "base-constructor",
+      "symbol": "LastLogCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/LastLogCommand.cs",
+        "line": 19
+      },
+      "definition": null
+    },
+    {
+      "name": "log",
+      "registration": "base-constructor",
+      "symbol": "LogCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/LogCommand.cs",
+        "line": 20
+      },
+      "definition": null
+    },
+    {
+      "name": "logFile",
+      "registration": "base-constructor",
+      "symbol": "LoggerFileCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/LoggerFileCommand.cs",
+        "line": 18
+      },
+      "definition": null
+    },
+    {
+      "name": "logLevel",
+      "registration": "base-constructor",
+      "symbol": "LogLevelCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/LogLevelCommand.cs",
+        "line": 21
+      },
+      "definition": null
+    },
+    {
+      "name": "logNetwork",
+      "registration": "base-constructor",
+      "symbol": "NetworkLoggerCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/NetworkLoggerCommand.cs",
+        "line": 48
+      },
+      "definition": null
+    },
+    {
+      "name": "mach",
+      "registration": "base-constructor",
+      "symbol": "MachCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/MachCommand.cs",
+        "line": 22
+      },
+      "definition": null
+    },
+    {
+      "name": "macro",
+      "registration": "monitor-registration",
+      "symbol": "SetCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Monitor.cs",
+        "line": 854
+      },
+      "definition": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/SetCommand.cs",
+        "line": 20
+      }
+    },
+    {
+      "name": "numbersMode",
+      "registration": "base-constructor",
+      "symbol": "NumbersModeCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/NumbersModeCommand.cs",
+        "line": 18
+      },
+      "definition": null
+    },
+    {
+      "name": "path",
+      "registration": "base-constructor",
+      "symbol": "MonitorPathCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/MonitorPathCommand.cs",
+        "line": 18
+      },
+      "definition": null
+    },
+    {
+      "name": "pause",
+      "registration": "base-constructor",
+      "symbol": "PauseCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/PauseCommand.cs",
+        "line": 16
+      },
+      "definition": null
+    },
+    {
+      "name": "peripherals",
+      "registration": "base-constructor",
+      "symbol": "PeripheralsCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/PeripheralsCommand.cs",
+        "line": 28
+      },
+      "definition": null
+    },
+    {
+      "name": "printenv",
+      "registration": "base-constructor",
+      "symbol": "PrintEnvironmentCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/PrintenvCommand.cs",
+        "line": 15
+      },
+      "definition": null
+    },
+    {
+      "name": "python",
+      "registration": "base-constructor",
+      "symbol": "PythonExecuteCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/PythonExecuteCommand.cs",
+        "line": 19
+      },
+      "definition": null
+    },
+    {
+      "name": "quit",
+      "registration": "base-constructor",
+      "symbol": "QuitCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/QuitCommand.cs",
+        "line": 18
+      },
+      "definition": null
+    },
+    {
+      "name": "require",
+      "registration": "base-constructor",
+      "symbol": "RequireVariableCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/RequireVariableCommand.cs",
+        "line": 14
+      },
+      "definition": null
+    },
+    {
+      "name": "resd",
+      "registration": "base-constructor",
+      "symbol": "ResdCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/ResdCommand.cs",
+        "line": 24
+      },
+      "definition": null
+    },
+    {
+      "name": "reverseExecMode",
+      "registration": "base-constructor",
+      "symbol": "ReverseExecModeCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/ReverseExecModeCommand.cs",
+        "line": 17
+      },
+      "definition": null
+    },
+    {
+      "name": "runMacro",
+      "registration": "monitor-registration",
+      "symbol": "ExecuteCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Monitor.cs",
+        "line": 860
+      },
+      "definition": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/ExecuteCommand.cs",
+        "line": 21
+      }
+    },
+    {
+      "name": "set",
+      "registration": "monitor-registration",
+      "symbol": "SetCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Monitor.cs",
+        "line": 852
+      },
+      "definition": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/SetCommand.cs",
+        "line": 20
+      }
+    },
+    {
+      "name": "setAndRevertAfter",
+      "registration": "base-constructor",
+      "symbol": "SetAndRevertAfterCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/SetAndRevertAfterCommand.cs",
+        "line": 25
+      },
+      "definition": null
+    },
+    {
+      "name": "showAnalyzer",
+      "registration": "base-constructor",
+      "symbol": "ShowBackendAnalyzerCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/ShowBackendAnalyzerCommand.cs",
+        "line": 100
+      },
+      "definition": null
+    },
+    {
+      "name": "start",
+      "registration": "base-constructor",
+      "symbol": "StartCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/StartCommand.cs",
+        "line": 19
+      },
+      "definition": null
+    },
+    {
+      "name": "string",
+      "registration": "base-constructor",
+      "symbol": "StringCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/StringCommand.cs",
+        "line": 18
+      },
+      "definition": null
+    },
+    {
+      "name": "tags",
+      "registration": "base-constructor",
+      "symbol": "TagsCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/TagsCommand.cs",
+        "line": 25
+      },
+      "definition": null
+    },
+    {
+      "name": "using",
+      "registration": "base-constructor",
+      "symbol": "UsingCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/UsingCommand.cs",
+        "line": 20
+      },
+      "definition": null
+    },
+    {
+      "name": "verboseMode",
+      "registration": "base-constructor",
+      "symbol": "VerboseCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/VerboseCommand.cs",
+        "line": 18
+      },
+      "definition": null
+    },
+    {
+      "name": "version",
+      "registration": "base-constructor",
+      "symbol": "VersionCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/VersionCommand.cs",
+        "line": 16
+      },
+      "definition": null
+    },
+    {
+      "name": "watch",
+      "registration": "base-constructor",
+      "symbol": "WatchCommand",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Commands/WatchCommand.cs",
+        "line": 16
+      },
+      "definition": null
+    },
+    {
+      "name": "console_log",
+      "registration": "python-function",
+      "symbol": "mc_console_log",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 40
+      },
+      "definition": null
+    },
+    {
+      "name": "dump",
+      "registration": "python-function",
+      "symbol": "mc_dump",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 56
+      },
+      "definition": null
+    },
+    {
+      "name": "dump_file",
+      "registration": "python-function",
+      "symbol": "mc_dump_file",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 75
+      },
+      "definition": null
+    },
+    {
+      "name": "echo",
+      "registration": "python-function",
+      "symbol": "mc_echo",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 43
+      },
+      "definition": null
+    },
+    {
+      "name": "get_environ",
+      "registration": "python-function",
+      "symbol": "mc_get_environ",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 84
+      },
+      "definition": null
+    },
+    {
+      "name": "if",
+      "registration": "python-function",
+      "symbol": "mc_if",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 89
+      },
+      "definition": null
+    },
+    {
+      "name": "next_value",
+      "registration": "python-function",
+      "symbol": "mc_next_value",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 31
+      },
+      "definition": null
+    },
+    {
+      "name": "print",
+      "registration": "python-function",
+      "symbol": "mc_print",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 97
+      },
+      "definition": null
+    },
+    {
+      "name": "pyprint",
+      "registration": "python-function",
+      "symbol": "mc_pyprint",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 113
+      },
+      "definition": null
+    },
+    {
+      "name": "sleep",
+      "registration": "python-function",
+      "symbol": "mc_sleep",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 37
+      },
+      "definition": null
+    },
+    {
+      "name": "str_contains",
+      "registration": "python-function",
+      "symbol": "mc_str_contains",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 94
+      },
+      "definition": null
+    },
+    {
+      "name": "uart_connect",
+      "registration": "python-function",
+      "symbol": "mc_uart_connect",
+      "source": {
+        "repository": "renode",
+        "path": "scripts/monitor.py",
+        "line": 4
+      },
+      "definition": null
+    }
+  ],
+  "keywords": [
+    {
+      "name": "using",
+      "symbol": "UsingKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 108
+      }
+    },
+    {
+      "name": "new",
+      "symbol": "NewKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 110
+      }
+    },
+    {
+      "name": "as",
+      "symbol": "AsKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 112
+      }
+    },
+    {
+      "name": "preinit",
+      "symbol": "PreinitKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 114
+      }
+    },
+    {
+      "name": "init",
+      "symbol": "InitKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 116
+      }
+    },
+    {
+      "name": "reset",
+      "symbol": "ResetKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 118
+      }
+    },
+    {
+      "name": "local",
+      "symbol": "LocalKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 120
+      }
+    },
+    {
+      "name": "true",
+      "symbol": "TrueKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 122
+      }
+    },
+    {
+      "name": "True",
+      "symbol": "TrueKeywordTitleCase",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 123
+      }
+    },
+    {
+      "name": "false",
+      "symbol": "FalseKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 125
+      }
+    },
+    {
+      "name": "False",
+      "symbol": "FalseKeywordTitleCase",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 126
+      }
+    },
+    {
+      "name": "none",
+      "symbol": "NoneKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 128
+      }
+    },
+    {
+      "name": "empty",
+      "symbol": "EmptyKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 130
+      }
+    }
+  ],
+  "tokenizer": [
+    {
+      "order": 0,
+      "kind": "CommentToken",
+      "dotnet": "^\\#.*",
+      "options": [],
+      "sublime": "#.*",
+      "javascript": "#[^\\n]*",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 22
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 1,
+      "kind": "ExecutionToken",
+      "dotnet": "^`.*?`",
+      "options": [],
+      "sublime": "`.*?`",
+      "javascript": "`[^\\n]*?`",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 25
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 2,
+      "kind": "VariableToken",
+      "dotnet": "^\\$([0-9]|(?i:[a-z])|_|\\.)+",
+      "options": [],
+      "sublime": "\\$(?:[0-9]|(?:[a-zA-Z])|_|\\.)+",
+      "javascript": "\\$(?:[0-9]|(?:[a-zA-Z])|_|\\.)+",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 28
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 3,
+      "kind": "LeftBraceToken",
+      "dotnet": "^\\[",
+      "options": [],
+      "sublime": "\\[",
+      "javascript": "\\[",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 31
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 4,
+      "kind": "RightBraceToken",
+      "dotnet": "^\\]",
+      "options": [],
+      "sublime": "\\]",
+      "javascript": "\\]",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 34
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 5,
+      "kind": "MultilineStringToken",
+      "dotnet": "^\"\"\".+?\"\"\"",
+      "options": [
+        "Singleline"
+      ],
+      "sublime": "\"\"\"[\\s\\S]+?\"\"\"",
+      "javascript": "\"\"\"[\\s\\S]+?\"\"\"",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 37
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 6,
+      "kind": "MultilineStringTerminatorToken",
+      "dotnet": "^\"\"\"",
+      "options": [],
+      "sublime": "\"\"\"",
+      "javascript": "\"\"\"",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 40
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 7,
+      "kind": "StringToken",
+      "dotnet": "^'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'",
+      "options": [],
+      "sublime": "'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'",
+      "javascript": "'[^'\\\\]*(?:\\\\[^\\n][^'\\\\]*)*'",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 43
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 8,
+      "kind": "StringToken",
+      "dotnet": "^\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"",
+      "options": [],
+      "sublime": "\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"",
+      "javascript": "\"[^\"\\\\]*(?:\\\\[^\\n][^\"\\\\]*)*\"",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 44
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 9,
+      "kind": "AbsoluteRangeToken",
+      "dotnet": "^<\\s*((0x([0-9]|(?i:[a-f]))+)|([+-]?\\d+))\\s*,\\s*((0x([0-9]|(?i:[a-f]))+)|([+-]?\\d+))\\s*>",
+      "options": [],
+      "sublime": "<\\s*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\d+))\\s*,\\s*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\d+))\\s*>",
+      "javascript": "<[\\p{Z}\\t\\n\\v\\f\\r\\u0085]*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\p{Nd}+))[\\p{Z}\\t\\n\\v\\f\\r\\u0085]*,[\\p{Z}\\t\\n\\v\\f\\r\\u0085]*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\p{Nd}+))[\\p{Z}\\t\\n\\v\\f\\r\\u0085]*>",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 47
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 10,
+      "kind": "RelativeRangeToken",
+      "dotnet": "^<\\s*((0x([0-9]|(?i:[a-f]))+)|([+-]?\\d+))\\s+((0x([0-9]|(?i:[a-f]))+)|(\\+?\\d+))\\s*>",
+      "options": [],
+      "sublime": "<\\s*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\d+))\\s+(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:\\+?\\d+))\\s*>",
+      "javascript": "<[\\p{Z}\\t\\n\\v\\f\\r\\u0085]*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\p{Nd}+))[\\p{Z}\\t\\n\\v\\f\\r\\u0085]+(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:\\+?\\p{Nd}+))[\\p{Z}\\t\\n\\v\\f\\r\\u0085]*>",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 50
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 11,
+      "kind": "PathToken",
+      "dotnet": "^\\@(?:(?!;)((\\\\ )|\\S))+",
+      "options": [],
+      "sublime": "@(?:(?!;)(?:(?:\\\\ )|\\S))+",
+      "javascript": "@(?:(?!;)(?:(?:\\\\ )|[^\\p{Z}\\t\\n\\v\\f\\r\\u0085]))+",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 53
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 12,
+      "kind": "HexToken",
+      "dotnet": "^0x([0-9]|(?i:[a-f]))+",
+      "options": [],
+      "sublime": "0x(?:[0-9]|(?:[a-fA-F]))+",
+      "javascript": "0x(?:[0-9]|(?:[a-fA-F]))+",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 56
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 13,
+      "kind": "TimeIntervalToken",
+      "dotnet": "^(([0-9]+:)?[0-9]+:)[0-9]+(\\.[0-9]+)?",
+      "options": [],
+      "sublime": "(?:(?:[0-9]+:)?[0-9]+:)[0-9]+(?:\\.[0-9]+)?",
+      "javascript": "(?:(?:[0-9]+:)?[0-9]+:)[0-9]+(?:\\.[0-9]+)?",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 59
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 14,
+      "kind": "FloatToken",
+      "dotnet": "^[+-]?((\\d+\\.(\\d*)?(e[+-]?\\d+)?))",
+      "options": [],
+      "sublime": "[+-]?(?:(?:\\d+\\.(?:\\d*)?(?:e[+-]?\\d+)?))",
+      "javascript": "[+-]?(?:(?:\\p{Nd}+\\.(?:\\p{Nd}*)?(?:e[+-]?\\p{Nd}+)?))",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 62
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 15,
+      "kind": "DecimalIntegerToken",
+      "dotnet": "^[+-]?\\d+(e[+-]?\\d+)?",
+      "options": [],
+      "sublime": "[+-]?\\d+(?:e[+-]?\\d+)?",
+      "javascript": "[+-]?\\p{Nd}+(?:e[+-]?\\p{Nd}+)?",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 65
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 16,
+      "kind": "BooleanToken",
+      "dotnet": "^(true|false|True|False)",
+      "options": [],
+      "sublime": "(?:true|false|True|False)",
+      "javascript": "(?:true|false|True|False)",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 68
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 17,
+      "kind": "NullToken",
+      "dotnet": "^null",
+      "options": [],
+      "sublime": "null",
+      "javascript": "null",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 71
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 18,
+      "kind": "EqualityToken",
+      "dotnet": "^=",
+      "options": [],
+      "sublime": "=",
+      "javascript": "=",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 74
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 19,
+      "kind": "ConditionalEqualityToken",
+      "dotnet": "^\\?=",
+      "options": [],
+      "sublime": "\\?=",
+      "javascript": "\\?=",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 77
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 20,
+      "kind": "CommandSplit",
+      "dotnet": "^\\;",
+      "options": [],
+      "sublime": ";",
+      "javascript": ";",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 80
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 21,
+      "kind": "CommaToken",
+      "dotnet": "^,",
+      "options": [],
+      "sublime": ",",
+      "javascript": ",",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 83
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 22,
+      "kind": "LiteralToken",
+      "dotnet": "^[\\w\\.\\-\\?][\\w\\.\\-\\?:]*",
+      "options": [],
+      "sublime": "[\\w\\.\\-\\?][\\w\\.\\-\\?:]*",
+      "javascript": "[\\p{L}\\p{Mn}\\p{Nd}\\p{Pc}\\.\\-\\?][\\p{L}\\p{Mn}\\p{Nd}\\p{Pc}\\.\\-\\?:]*",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 86
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 23,
+      "kind": "Whitespace",
+      "dotnet": "^\\s+",
+      "options": [],
+      "sublime": "\\s+",
+      "javascript": "[\\p{Z}\\t\\n\\v\\f\\r\\u0085]+",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 89
+      },
+      "javascript_flags": "u"
+    },
+    {
+      "order": 24,
+      "kind": "CommentToken",
+      "dotnet": "^:.*",
+      "options": [],
+      "sublime": ":.*",
+      "javascript": ":[^\\n]*",
+      "source": {
+        "repository": "infrastructure",
+        "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+        "line": 92
+      },
+      "javascript_flags": "u"
+    }
+  ],
+  "platform": {
+    "GeneralIdentifier": {
+      "pattern": "[A-Za-z](?:(?:[A-Za-z0-9]|_))*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 104
+      }
+    },
+    "TypeName": {
+      "pattern": "[A-Za-z](?:(?:[A-Za-z0-9]|_))*(?:\\.[A-Za-z](?:(?:[A-Za-z0-9]|_))*)*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 135
+      }
+    },
+    "HexadecimalUnsignedLong": {
+      "pattern": "0x(?:[0123456789ABCDEFabcdef])+(?:_(?:[0123456789ABCDEFabcdef])+)*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 81
+      }
+    },
+    "DecimalUnsignedLong": {
+      "pattern": "\\d+(?:_\\d+)*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 71
+      }
+    },
+    "HexadecimalNumberWithSign": {
+      "pattern": "(?:\\-)?0x(?:[0123456789ABCDEFabcdef])+(?:_(?:[0123456789ABCDEFabcdef])+)*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 90
+      }
+    },
+    "DecimalNumberWithSign": {
+      "pattern": "(?:\\-)?\\d+(?:_\\d+)*(?:\\.\\d+)?",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 96
+      }
+    },
+    "Number": {
+      "pattern": "(?:(?:\\-)?0x(?:[0123456789ABCDEFabcdef])+(?:_(?:[0123456789ABCDEFabcdef])+)*|(?:\\-)?\\d+(?:_\\d+)*(?:\\.\\d+)?)",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 101
+      }
+    },
+    "RightArrow": {
+      "pattern": "\\->",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 60
+      }
+    },
+    "MultiplexSign": {
+      "pattern": "\\|",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 29
+      }
+    },
+    "AtSign": {
+      "pattern": "@",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 27
+      }
+    },
+    "Separator": {
+      "pattern": ";",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 25
+      }
+    },
+    "Comma": {
+      "pattern": ",",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 33
+      }
+    },
+    "Colon": {
+      "pattern": ":",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 31
+      }
+    },
+    "QuotationMark": {
+      "pattern": "\"",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 52
+      }
+    },
+    "MultiQuotationMark": {
+      "pattern": "'''",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 54
+      }
+    },
+    "EscapeCharacter": {
+      "pattern": "\\\\",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 56
+      }
+    },
+    "DecimalSign": {
+      "pattern": "(?:\\-)?",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 96
+      }
+    },
+    "DecimalMagnitude": {
+      "pattern": "\\d+(?:_\\d+)*(?:\\.\\d+)?",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 97
+      }
+    },
+    "MonitorSuffix": {
+      "pattern": "add",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 293
+      }
+    }
+  }
+}

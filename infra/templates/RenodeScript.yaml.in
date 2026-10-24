@@ -1,0 +1,218 @@
+%YAML 1.2
+---
+# Generated from infra/templates/RenodeScript.yaml.in; run just source::generate.
+# Renode monitor scripts.
+# Token order mirrors the monitor tokenizer:
+# renode-infrastructure src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs
+name: Renode Script
+file_extensions:
+  - resc
+scope: source.renode.resc
+
+variables:
+  literal: '@@LiteralToken_0@@'
+  literal_end: '@@LITERAL_END@@'
+  hash_comment: @@CommentToken_0_START_yaml@@
+  colon_comment: @@CommentToken_1_START_yaml@@
+  execution_start: @@ExecutionToken_0_START_yaml@@
+  execution_end: @@ExecutionToken_0_END_yaml@@
+  multiline_start: @@MultilineStringToken_0_START_yaml@@
+  multiline_end: @@MultilineStringToken_0_END_yaml@@
+  multiline_terminator: @@MultilineStringTerminatorToken_0_START_yaml@@
+  single_start: @@StringToken_0_START_yaml@@
+  single_end: @@StringToken_0_END_yaml@@
+  double_start: @@StringToken_1_START_yaml@@
+  double_end: @@StringToken_1_END_yaml@@
+  string_escape: @@StringToken_0_ESCAPE_yaml@@
+  # `{` never occurs in scripts; it opens brace-mode `init:` blocks in Renode Platform files.
+  statement_start: '(?:^|(?<=[;`{]))[ \t]*'
+  # Full names registered in Monitor.cs and UserInterface/Commands,
+  # then the `mc_*` commands of the default scripts/monitor.py;
+  # short aliases (`s`, `p`, `q`) would flag peripheral names.
+  builtin: |-
+    (?x:
+@@BUILTINS@@
+    )
+
+contexts:
+  main:
+    - include: statements
+
+  statements:
+    - include: hash-comments
+    - include: python-block
+    - include: macro-definition
+    - include: builtin-command
+    - include: method-call
+    - include: tokens
+
+  hash-comments:
+    - match: '{{hash_comment}}'
+      scope: punctuation.definition.comment.renode-resc
+      push: line-comment
+
+  colon-comments:
+    - match: '{{colon_comment}}'
+      scope: punctuation.definition.comment.renode-resc
+      push: line-comment
+
+  line-comment:
+    - meta_include_prototype: false
+    - meta_scope: comment.line.renode-resc
+    - match: $\n?
+      pop: true
+
+  python-block:
+    - match: '{{statement_start}}(@@Command_python@@)[ \t]+({{multiline_start}})'
+      captures:
+        1: support.function.builtin.renode-resc
+        2: string.quoted.triple.renode-resc punctuation.definition.string.begin.renode-resc
+      embed: scope:source.python
+      embed_scope: source.python.embedded.renode-resc
+      escape: '{{multiline_end}}'
+      escape_captures:
+        0: string.quoted.triple.renode-resc punctuation.definition.string.end.renode-resc
+
+  macro-definition:
+    - match: '{{statement_start}}(@@Command_macro@@)[ \t]+({{literal}})'
+      captures:
+        1: support.function.builtin.renode-resc
+        2: entity.name.function.renode-resc
+      push: macro-body-start
+
+  macro-body-start:
+    - match: '{{multiline_terminator}}'
+      scope: punctuation.section.block.begin.renode-resc
+      set: macro-body
+    - include: hash-comments
+    - include: colon-comments
+    - match: '(?=\S)'
+      pop: true
+
+  macro-body:
+    - meta_scope: meta.block.macro.renode-resc
+    - match: '{{multiline_terminator}}'
+      scope: punctuation.section.block.end.renode-resc
+      pop: true
+    - include: statements
+
+  builtin-command:
+    - match: '{{statement_start}}({{builtin}}){{literal_end}}'
+      captures:
+        1: support.function.builtin.renode-resc
+
+  # Renode methods and properties are PascalCase: `sysbus LoadELF`, `cpu PerformanceInMips`.
+  # The object is implicit after `using sysbus` and inside platform `init:` blocks.
+  method-call:
+    - match: '{{statement_start}}({{literal}})[ \t]+([A-Z]\w*){{literal_end}}'
+      captures:
+        1: variable.other.object.renode-resc
+        2: variable.function.renode-resc
+    - match: '{{statement_start}}([A-Z]\w*){{literal_end}}'
+      captures:
+        1: variable.function.renode-resc
+
+  tokens:
+    - include: execution
+    - include: variable-references
+    - match: '@@LeftBraceToken_0@@'
+      scope: punctuation.section.brackets.begin.renode-resc
+    - match: '@@RightBraceToken_0@@'
+      scope: punctuation.section.brackets.end.renode-resc
+    - include: strings
+    - include: ranges
+    - include: paths
+    - include: numbers
+    - match: '@@BooleanToken_0@@{{literal_end}}'
+      scope: constant.language.boolean.renode-resc
+    - match: '@@NullToken_0@@{{literal_end}}'
+      scope: constant.language.null.renode-resc
+    - match: '@@ConditionalEqualityToken_0@@'
+      scope: keyword.operator.assignment.conditional.renode-resc
+    - match: '@@EqualityToken_0@@'
+      scope: keyword.operator.assignment.renode-resc
+    - match: '@@CommandSplit_0@@'
+      scope: punctuation.terminator.renode-resc
+    - match: '@@CommaToken_0@@'
+      scope: punctuation.separator.renode-resc
+    - match: '{{literal}}'
+    # Literals may contain `:`, so a colon only starts a comment outside one.
+    - include: colon-comments
+
+  execution:
+    - match: '{{execution_start}}'
+      scope: punctuation.section.interpolation.begin.renode-resc
+      push:
+        - meta_scope: meta.interpolation.renode-resc
+        - match: '{{execution_end}}'
+          scope: punctuation.section.interpolation.end.renode-resc
+          pop: true
+        - match: $
+          pop: true
+        - include: statements
+
+  variable-references:
+    - match: '@@VariableToken_captured@@'
+      scope: variable.other.renode-resc
+      captures:
+        1: punctuation.definition.variable.renode-resc
+
+  strings:
+    - match: '{{multiline_terminator}}'
+      scope: punctuation.definition.string.begin.renode-resc
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.triple.renode-resc
+        - match: '{{multiline_end}}'
+          scope: punctuation.definition.string.end.renode-resc
+          pop: true
+    - match: '{{double_start}}'
+      scope: punctuation.definition.string.begin.renode-resc
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.double.renode-resc
+        - match: '{{string_escape}}'
+          scope: constant.character.escape.renode-resc
+        - match: '{{double_end}}'
+          scope: punctuation.definition.string.end.renode-resc
+          pop: true
+    - match: '{{single_start}}'
+      scope: punctuation.definition.string.begin.renode-resc
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.single.renode-resc
+        - match: '{{string_escape}}'
+          scope: constant.character.escape.renode-resc
+        - match: '{{single_end}}'
+          scope: punctuation.definition.string.end.renode-resc
+          pop: true
+
+  ranges:
+    - match: '(?=@@AbsoluteRangeToken_0@@|@@RelativeRangeToken_0@@)<'
+      scope: punctuation.section.range.begin.renode-resc
+      push:
+        - meta_scope: meta.range.renode-resc
+        - match: '>'
+          scope: punctuation.section.range.end.renode-resc
+          pop: true
+        - match: ','
+          scope: punctuation.separator.renode-resc
+        - match: '\+(?=\s*\d)'
+          scope: keyword.operator.arithmetic.renode-resc
+        - include: numbers
+
+  paths:
+    - match: '@@PathToken_captured@@'
+      scope: string.unquoted.path.renode-resc
+      captures:
+        1: punctuation.definition.string.begin.renode-resc
+
+  numbers:
+    - match: '@@HexToken_0@@'
+      scope: constant.numeric.integer.hexadecimal.renode-resc
+    - match: '@@TimeIntervalToken_0@@'
+      scope: constant.numeric.time.renode-resc
+    - match: '@@FloatToken_0@@'
+      scope: constant.numeric.float.renode-resc
+    - match: '@@DecimalIntegerToken_0@@'
+      scope: constant.numeric.integer.decimal.renode-resc

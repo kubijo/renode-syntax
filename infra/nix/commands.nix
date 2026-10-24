@@ -2,6 +2,7 @@
   pkgs,
   project,
   pythonTools,
+  nodejs,
 }:
 let
   inherit (builtins) toJSON;
@@ -55,6 +56,18 @@ let
     "--check"
     "--offline"
   ];
+  source =
+    action:
+    step "source-${action}" [
+      python
+      "infra/python/generate.py"
+      action
+    ];
+  regexCheck = step "regex" [
+    (lib.getExe nodejs)
+    "infra/javascript/check-regex.mjs"
+    "generated/renode.json"
+  ];
   plans = {
     format = [ (format // { forward_arguments = true; }) ];
     inherit lint;
@@ -65,10 +78,18 @@ let
     ++ lint
     ++ [
       toolingTests
+      (source "check")
+      regexCheck
       syntax
     ];
     test-syntax = [ syntax ];
     test-tooling = [ toolingTests ];
+    source-fetch = [ (source "fetch") ];
+    source-generate = [ (source "generate") ];
+    source-check = [
+      (source "check")
+      regexCheck
+    ];
     python-lock = [
       (step "python-lock" [
         uv

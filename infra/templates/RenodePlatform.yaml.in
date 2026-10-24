@@ -1,0 +1,203 @@
+%YAML 1.2
+---
+# Generated from infra/templates/RenodePlatform.yaml.in; run just source::generate.
+# Renode platform descriptions.
+# Follows renode src/Renode/PlatformDescription/Syntax/Grammar.cs,
+# with comments and strings as split out by PlatformDescription/PreLexer.cs.
+name: Renode Platform
+file_extensions:
+  - repl
+scope: source.renode.repl
+
+variables:
+  ident: '@@GeneralIdentifier@@'
+  # Grammar.cs MakeKeyword(); identifiers may not be one of these.
+  keyword: '(?:@@KEYWORDS@@)\b'
+  type_name: '@@TypeName@@'
+  number: '(?:@@HexadecimalUnsignedLong@@|@@DecimalUnsignedLong@@)'
+  monitor_keyword: '(@@PreinitKeyword@@|@@InitKeyword@@|@@ResetKeyword@@)(?:\s+(@@MonitorSuffix@@))?\s*(:)'
+
+contexts:
+  prototype:
+    - include: comments
+
+  main:
+    - include: using
+    - include: entry
+    - include: monitor-block
+    - include: attribute-name
+    - include: values
+
+  comments:
+    # PreLexer only treats `//` as a comment at line start or after a space,
+    # which keeps `@https://…` intact.
+    - match: '(?:^|(?<= ))//'
+      scope: punctuation.definition.comment.renode-repl
+      push:
+        - meta_include_prototype: false
+        - meta_scope: comment.line.double-slash.renode-repl
+        - match: $\n?
+          pop: true
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.renode-repl
+      push:
+        - meta_include_prototype: false
+        - meta_scope: comment.block.renode-repl
+        - match: '\*/'
+          scope: punctuation.definition.comment.end.renode-repl
+          pop: true
+
+  using:
+    - match: '\b@@UsingKeyword@@\b'
+      scope: keyword.control.import.renode-repl
+
+  entry:
+    - match: '^(?:(@@LocalKeyword@@)\s+)?(?!{{keyword}})({{ident}})\s*(:)(?:\s*({{type_name}}))?'
+      captures:
+        1: storage.modifier.renode-repl
+        2: entity.name.variable.renode-repl
+        3: punctuation.separator.key-value.renode-repl
+        4: support.class.renode-repl
+
+  # Bodies are monitor statements, highlighted with the Renode Script rules.
+  monitor-block:
+    - match: '^(\s*){{monitor_keyword}}(?=\s*\{)'
+      captures:
+        2: keyword.other.renode-repl
+        3: storage.modifier.renode-repl
+        4: punctuation.separator.key-value.renode-repl
+      push: monitor-braces-start
+    - match: '^(\s*){{monitor_keyword}}'
+      captures:
+        2: keyword.other.renode-repl
+        3: storage.modifier.renode-repl
+        4: punctuation.separator.key-value.renode-repl
+      push: monitor-indented
+
+  monitor-braces-start:
+    - match: '\{'
+      scope: punctuation.section.block.begin.renode-repl
+      set: monitor-braces
+
+  monitor-braces:
+    - meta_scope: meta.block.monitor.renode-repl
+    - match: '\}'
+      scope: punctuation.section.block.end.renode-repl
+      pop: true
+    - include: scope:source.renode.resc#statements
+
+  # Indent mode: the block runs while lines are indented deeper than the keyword.
+  monitor-indented:
+    - meta_scope: meta.block.monitor.renode-repl
+    - match: '^(?!\1[ \t]+\S|[ \t]*$)'
+      pop: true
+    - include: scope:source.renode.resc#statements
+
+  attribute-name:
+    # Python.PythonPeripheral bodies; Grammar.cs reads `\'''` as an escaped delimiter.
+    - match: '(?:^\s+|(?<=[{;])\s*)(script)\s*(:)\s*(''{3})'
+      captures:
+        1: variable.other.member.renode-repl
+        2: punctuation.separator.key-value.renode-repl
+        3: string.quoted.triple.renode-repl punctuation.definition.string.begin.renode-repl
+      embed: scope:source.python
+      embed_scope: source.python.embedded.renode-repl
+      escape: "(?<!\\\\)'''"
+      escape_captures:
+        0: string.quoted.triple.renode-repl punctuation.definition.string.end.renode-repl
+    - match: '(?:^\s+|(?<=[{;])\s*)({{ident}})\s*(:)'
+      captures:
+        1: variable.other.member.renode-repl
+        2: punctuation.separator.key-value.renode-repl
+
+  values:
+    - include: strings
+    - match: '\b(@@NewKeyword@@)\s+({{type_name}})'
+      captures:
+        1: keyword.other.new.renode-repl
+        2: support.class.renode-repl
+    - match: '\b@@AsKeyword@@\b'
+      scope: keyword.other.renode-repl
+    - match: '\b(?:@@TrueKeyword@@|@@FalseKeyword@@|@@TrueKeywordTitleCase@@|@@FalseKeywordTitleCase@@)\b'
+      scope: constant.language.boolean.renode-repl
+    - match: '\b@@NoneKeyword@@\b'
+      scope: constant.language.null.renode-repl
+    - match: '\b@@EmptyKeyword@@\b'
+      scope: constant.language.renode-repl
+    - include: ranges
+    - include: irq-ranges
+    - include: numbers
+    - match: '{{ident}}(?:\.{{ident}})+|(?<![\w.])\.{{ident}}'
+      scope: constant.other.enum.renode-repl
+    - match: '@@RightArrow@@'
+      scope: keyword.operator.arrow.renode-repl
+    - match: '@@MultiplexSign@@'
+      scope: keyword.operator.multiplex.renode-repl
+    - match: '@@AtSign@@'
+      scope: keyword.operator.registration.renode-repl
+    - match: '#'
+      scope: keyword.operator.local-index.renode-repl
+    - match: '\{'
+      scope: punctuation.section.braces.begin.renode-repl
+    - match: '\}'
+      scope: punctuation.section.braces.end.renode-repl
+    - match: '\['
+      scope: punctuation.section.brackets.begin.renode-repl
+    - match: '\]'
+      scope: punctuation.section.brackets.end.renode-repl
+    - match: '@@Separator@@'
+      scope: punctuation.terminator.renode-repl
+    - match: '@@Comma@@'
+      scope: punctuation.separator.renode-repl
+    - match: '@@Colon@@'
+      scope: punctuation.separator.key-value.renode-repl
+
+  strings:
+    - match: "'''"
+      scope: punctuation.definition.string.begin.renode-repl
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.triple.renode-repl
+        - match: "\\\\'''"
+          scope: constant.character.escape.renode-repl
+        - match: "'''"
+          scope: punctuation.definition.string.end.renode-repl
+          pop: true
+    - match: '"'
+      scope: punctuation.definition.string.begin.renode-repl
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.double.renode-repl
+        - match: '\\["\\]'
+          scope: constant.character.escape.renode-repl
+        - match: '"'
+          scope: punctuation.definition.string.end.renode-repl
+          pop: true
+
+  ranges:
+    - match: '<(?=\s*{{number}}\s*,\s*\+?\s*{{number}}\s*>)'
+      scope: punctuation.section.range.begin.renode-repl
+      push:
+        - meta_scope: meta.range.renode-repl
+        - match: '>'
+          scope: punctuation.section.range.end.renode-repl
+          pop: true
+        - match: ','
+          scope: punctuation.separator.renode-repl
+        - match: '\+'
+          scope: keyword.operator.arithmetic.renode-repl
+        - include: numbers
+
+  # IRQ ranges like `[0-31]`; matched before numbers so `-31` is not read as negative.
+  irq-ranges:
+    - match: '({{number}})\s*(-)\s*({{number}})'
+      captures:
+        1: constant.numeric.renode-repl
+        2: keyword.operator.range.renode-repl
+        3: constant.numeric.renode-repl
+
+  numbers:
+    - match: '@@HexadecimalNumberWithSign@@\b'
+      scope: constant.numeric.integer.hexadecimal.renode-repl
+    - match: '@@DecimalSign@@\b@@DecimalMagnitude@@\b'
+      scope: constant.numeric.decimal.renode-repl

@@ -1,5 +1,6 @@
 %YAML 1.2
 ---
+# Generated from infra/templates/RenodeScript.yaml.in; run just source::generate.
 # Renode monitor scripts.
 # Token order mirrors the monitor tokenizer:
 # renode-infrastructure src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs
@@ -9,8 +10,20 @@ file_extensions:
 scope: source.renode.resc
 
 variables:
-  literal: '[\w.\-?][\w.\-?:]*'
-  literal_end: '(?![\w.\-?:])'
+  literal: '[\w\.\-\?][\w\.\-\?:]*'
+  literal_end: '(?![\w\.\-\?:])'
+  hash_comment: "#"
+  colon_comment: ":"
+  execution_start: "`"
+  execution_end: "`"
+  multiline_start: "\"\"\""
+  multiline_end: "\"\"\""
+  multiline_terminator: "\"\"\""
+  single_start: "'"
+  single_end: "'"
+  double_start: "\""
+  double_end: "\""
+  string_escape: "\\\\."
   # `{` never occurs in scripts; it opens brace-mode `init:` blocks in Renode Platform files.
   statement_start: '(?:^|(?<=[;`{]))[ \t]*'
   # Full names registered in Monitor.cs and UserInterface/Commands,
@@ -18,14 +31,13 @@ variables:
   # short aliases (`s`, `p`, `q`) would flag peripheral names.
   builtin: |-
     (?x:
-      allowPrivates|alias|analyzers|autoSave|createPlatform|currentTime|displayImage|execute
-      |help|include|lastLog|log|logFile|logLevel|logNetwork|mach|macro|numbersMode|path|pause
-      |peripherals|printenv|python|quit|require|resd|reverseExecMode|runMacro|set
+      alias|allowPrivates|analyzers|autoSave|createPlatform|currentTime|displayImage|execute
+      |help|include|lastLog|log|logFile|logLevel|logNetwork|mach|macro|numbersMode|path
+      |pause|peripherals|printenv|python|quit|require|resd|reverseExecMode|runMacro|set
       |setAndRevertAfter|showAnalyzer|start|string|tags|using|verboseMode|version|watch
       |console_log|dump|dump_file|echo|get_environ|if|next_value|print|pyprint|sleep
       |str_contains|uart_connect
     )
-  number: '(?:0x\h+|[+-]?\d+)'
 
 contexts:
   main:
@@ -40,12 +52,12 @@ contexts:
     - include: tokens
 
   hash-comments:
-    - match: '#'
+    - match: '{{hash_comment}}'
       scope: punctuation.definition.comment.renode-resc
       push: line-comment
 
   colon-comments:
-    - match: ':'
+    - match: '{{colon_comment}}'
       scope: punctuation.definition.comment.renode-resc
       push: line-comment
 
@@ -56,13 +68,13 @@ contexts:
       pop: true
 
   python-block:
-    - match: '{{statement_start}}(python)[ \t]+(""")'
+    - match: '{{statement_start}}(python)[ \t]+({{multiline_start}})'
       captures:
         1: support.function.builtin.renode-resc
         2: string.quoted.triple.renode-resc punctuation.definition.string.begin.renode-resc
       embed: scope:source.python
       embed_scope: source.python.embedded.renode-resc
-      escape: '"""'
+      escape: '{{multiline_end}}'
       escape_captures:
         0: string.quoted.triple.renode-resc punctuation.definition.string.end.renode-resc
 
@@ -74,7 +86,7 @@ contexts:
       push: macro-body-start
 
   macro-body-start:
-    - match: '"""'
+    - match: '{{multiline_terminator}}'
       scope: punctuation.section.block.begin.renode-resc
       set: macro-body
     - include: hash-comments
@@ -84,7 +96,7 @@ contexts:
 
   macro-body:
     - meta_scope: meta.block.macro.renode-resc
-    - match: '"""'
+    - match: '{{multiline_terminator}}'
       scope: punctuation.section.block.end.renode-resc
       pop: true
     - include: statements
@@ -133,11 +145,11 @@ contexts:
     - include: colon-comments
 
   execution:
-    - match: '`'
+    - match: '{{execution_start}}'
       scope: punctuation.section.interpolation.begin.renode-resc
       push:
         - meta_scope: meta.interpolation.renode-resc
-        - match: '`'
+        - match: '{{execution_end}}'
           scope: punctuation.section.interpolation.end.renode-resc
           pop: true
         - match: $
@@ -145,43 +157,43 @@ contexts:
         - include: statements
 
   variable-references:
-    - match: '(\$)[\w.]+'
+    - match: '(\$)(?:[0-9]|(?:[a-zA-Z])|_|\.)+'
       scope: variable.other.renode-resc
       captures:
         1: punctuation.definition.variable.renode-resc
 
   strings:
-    - match: '"""'
+    - match: '{{multiline_terminator}}'
       scope: punctuation.definition.string.begin.renode-resc
       push:
         - meta_include_prototype: false
         - meta_scope: string.quoted.triple.renode-resc
-        - match: '"""'
+        - match: '{{multiline_end}}'
           scope: punctuation.definition.string.end.renode-resc
           pop: true
-    - match: '"'
+    - match: '{{double_start}}'
       scope: punctuation.definition.string.begin.renode-resc
       push:
         - meta_include_prototype: false
         - meta_scope: string.quoted.double.renode-resc
-        - match: '\\.'
+        - match: '{{string_escape}}'
           scope: constant.character.escape.renode-resc
-        - match: '"'
+        - match: '{{double_end}}'
           scope: punctuation.definition.string.end.renode-resc
           pop: true
-    - match: "'"
+    - match: '{{single_start}}'
       scope: punctuation.definition.string.begin.renode-resc
       push:
         - meta_include_prototype: false
         - meta_scope: string.quoted.single.renode-resc
-        - match: '\\.'
+        - match: '{{string_escape}}'
           scope: constant.character.escape.renode-resc
-        - match: "'"
+        - match: '{{single_end}}'
           scope: punctuation.definition.string.end.renode-resc
           pop: true
 
   ranges:
-    - match: '<(?=\s*{{number}}\s*(?:,\s*|\s+)[+-]?{{number}}\s*>)'
+    - match: '(?=<\s*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\d+))\s*,\s*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\d+))\s*>|<\s*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\d+))\s+(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:\+?\d+))\s*>)<'
       scope: punctuation.section.range.begin.renode-resc
       push:
         - meta_scope: meta.range.renode-resc
@@ -195,17 +207,17 @@ contexts:
         - include: numbers
 
   paths:
-    - match: '(@)(?:(?!;)(?:\\ |\S))+'
+    - match: '(@)(?:(?!;)(?:(?:\\ )|\S))+'
       scope: string.unquoted.path.renode-resc
       captures:
         1: punctuation.definition.string.begin.renode-resc
 
   numbers:
-    - match: '0x\h+'
+    - match: '0x(?:[0-9]|(?:[a-fA-F]))+'
       scope: constant.numeric.integer.hexadecimal.renode-resc
-    - match: '(?:(?:\d+:)?\d+:)\d+(?:\.\d+)?'
+    - match: '(?:(?:[0-9]+:)?[0-9]+:)[0-9]+(?:\.[0-9]+)?'
       scope: constant.numeric.time.renode-resc
-    - match: '[+-]?\d+\.\d*(?:e[+-]?\d+)?'
+    - match: '[+-]?(?:(?:\d+\.(?:\d*)?(?:e[+-]?\d+)?))'
       scope: constant.numeric.float.renode-resc
     - match: '[+-]?\d+(?:e[+-]?\d+)?'
       scope: constant.numeric.integer.decimal.renode-resc

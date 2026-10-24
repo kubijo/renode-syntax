@@ -3,7 +3,7 @@ name = "renode-syntax-tooling"
 version = "0.1.0"
 description = "Renode syntax repository support tools"
 requires-python = "==3.15.*"
-dependencies = ["msgspec", "rich", "tyro"]
+dependencies = ["fissix", "msgspec", "rich", "tree-sitter", "tree-sitter-c-sharp", "tyro"]
 
 [tool.uv]
 package = false
@@ -17,6 +17,7 @@ preview = true
 quote-style = "single"
 
 [tool.basedpyright]
+stubPath = "infra/python/typings"
 include = ["."]
 exclude = [".git", ".tmp"]
 venvPath = ".tmp/venv"

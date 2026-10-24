@@ -100,3 +100,15 @@ sleep 1
 
 echoer Run
 # <- variable.other.object - support
+
+echo $ascii_1.name
+#    ^^^^^^^^^^^^^ variable.other
+
+echo $é
+#     ^ source.renode.resc - variable.other
+
+sysbus Tag <0x10 -4>
+#          ^^^^^^^^^ source.renode.resc - meta.range
+
+emulation RunFor ٠٠:٠٠:٠١
+#                ^^^^^^^^ source.renode.resc - constant.numeric.time

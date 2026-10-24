@@ -108,12 +108,16 @@ build output is never committed.
   and tokenizer rules in upstream order.
 - Extraction uses real parsers: Tree-sitter C# for the C# sources and Python's `ast` for `monitor.py`. An unrecognised
   registration form, a non-literal name or an untranslatable regex fails the run. Regex scraping of source text and
-  silent fallbacks are not acceptable.
+  silent fallbacks are not acceptable. The default script uses IronPython 2 syntax; Fissix normalizes its print
+  statements before AST extraction, without executing the script.
 - .NET regexes are translated per consumer: Oniguruma for Sublime, the JavaScript subset for Tree-sitter. Inline flags
   such as `(?i:…)` must be rewritten or rejected.
 - Sublime cannot import data, so its grammars are rendered from templates plus the generated data. Rendered files are
   committed (Sublime and bat load them directly), and a check fails when they are stale.
 - Structure (contexts, Tree-sitter rules, the indentation scanner, queries) is hand-written once.
+
+Upstream checkouts are disposable inputs, not submodules. Fetch the tracked pins before generation or a first local
+quality-gate run; checks then work offline and reject modified inputs. Use `just source` to discover that workflow.
 
 ### Grammars and editor support
 

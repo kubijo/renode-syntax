@@ -96,3 +96,15 @@ x = 1
 // <- source.python.embedded
 '''
 // <- string.quoted.triple punctuation.definition.string.end - source.python
+
+numeric: Some.Device @ sysbus 0
+    size: 1_000_000
+//        ^^^^^^^^^ constant.numeric.decimal
+    size: -1_000.25
+//        ^^^^^^^^^ constant.numeric.decimal
+    size: 0x1__F
+//        ^^^^^^ source.renode.repl - constant.numeric
+    size: 1__2
+//        ^^^^ source.renode.repl - constant.numeric
+    name: peripheral123
+//                  ^^^ source.renode.repl - constant.numeric
