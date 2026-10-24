@@ -15,3 +15,11 @@ runner:
 # Check the complete pinned Renode corpus for leaked Sublime scopes (offline).
 corpus:
     @renode-test-corpus
+
+# Run the monitor grammar's Tree-sitter corpus fixtures.
+parser:
+    @renode-test-parser
+
+# Parse the pinned monitor scripts with Tree-sitter (offline).
+parser-corpus:
+    @renode-test-parser-corpus

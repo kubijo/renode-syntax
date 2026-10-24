@@ -1,0 +1,12 @@
+id = "renode"
+name = "Renode"
+version = "0.1.0"
+schema_version = 1
+authors = ["kubijo"]
+description = "Renode monitor scripts"
+repository = "https://github.com/kubijo/renode-syntax"
+
+[grammars.resc]
+repository = "https://github.com/kubijo/renode-syntax"
+rev = "main"
+path = "tree-sitter/resc"

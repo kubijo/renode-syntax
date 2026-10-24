@@ -3,7 +3,7 @@ name = "renode-syntax-tooling"
 version = "0.1.0"
 description = "Renode syntax repository support tools"
 requires-python = "==3.15.*"
-dependencies = ["fissix", "msgspec", "rich", "tree-sitter", "tree-sitter-c-sharp", "tyro"]
+dependencies = ["fissix", "msgspec", "rich", "tomli-w", "tree-sitter", "tree-sitter-c-sharp", "tyro"]
 
 [tool.uv]
 package = false

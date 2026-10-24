@@ -64,9 +64,11 @@ upstream sync. [Agent workflow](../.ai/instructions.md).
 - No usable prior art: `achmutov/tree-sitter-resc` is a 4-commit `.resc`-only draft without committed `src/`, LICENSE
   file or tests. Antmicro's `renode-vscode-extension` contributes only a debugger. Zed's registry has no Renode
   extension.
-- **Verify against current Zed docs**: `extension.toml` grammar entries take `repository`, `rev` and optional `path`;
-  Zed compiles the committed generated `src/` (no `tree-sitter generate`); registry submission accepts an extension in a
-  subdirectory and requires a license file.
+- Zed's `extension.toml` grammar entries take `repository`, `rev` and optional `path`; its
+  [builder](https://github.com/zed-industries/zed/blob/main/crates/extension/src/extension_builder.rs) compiles
+  generated `src/` without running `tree-sitter generate`. Registry submission accepts an extension in a
+  [subdirectory](https://zed.dev/docs/extensions/publishing/publishing-guide) and requires a
+  [license file](https://zed.dev/docs/extensions/publishing/license-requirements) there; a symlink is accepted.
 - A full Sprache-to-Tree-sitter transpiler is rejected. `.Where` predicates, `Or`/`XOr` backtracking, the custom
   `XOptional` and `Positioned` do not map to a GLR grammar, and the prelexer is imperative code.
 
@@ -110,8 +112,10 @@ build output is never committed.
   registration form, a non-literal name or an untranslatable regex fails the run. Regex scraping of source text and
   silent fallbacks are not acceptable. The default script uses IronPython 2 syntax; Fissix normalizes its print
   statements before AST extraction, without executing the script.
-- .NET regexes are translated per consumer: Oniguruma for Sublime, the JavaScript subset for Tree-sitter. Inline flags
-  such as `(?i:…)` must be rewritten or rejected.
+- .NET regexes are translated per consumer: Oniguruma for Sublime and the
+  [Rust-regex subset](https://tree-sitter.github.io/tree-sitter/creating-parsers/2-the-grammar-dsl.html) for
+  Tree-sitter. Inline flags, lookahead and lazy delimiter matching must be explicitly rewritten or rejected. JavaScript
+  translations are also compiled and probed as an independent consumer check.
 - Sublime cannot import data, so its grammars are rendered from templates plus the generated data. Rendered files are
   committed (Sublime and bat load them directly), and a check fails when they are stale.
 - Structure (contexts, Tree-sitter rules, the indentation scanner, queries) is hand-written once.

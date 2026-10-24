@@ -28,6 +28,11 @@ let
           ;
       };
       nodejs = pkgs.nodejs_26;
+      wasiCompiler = pkgs.pkgsCross.wasi32.stdenv.cc;
+      wasiSdk = pkgs.writeShellScriptBin "clang" ''
+        exec ${wasiCompiler}/bin/${wasiCompiler.targetPrefix}cc \
+          -fuse-ld=${pkgs.llvmPackages.lld}/bin/wasm-ld "$@"
+      '';
       basedpyright = toolPkgs.basedpyright.override {
         buildNpmPackage = toolPkgs.buildNpmPackage.override { inherit nodejs; };
       };
@@ -73,6 +78,10 @@ let
             "LICENSE"
             "NOTICE"
             "*.in"
+            "*.scm"
+            "*.txt"
+            "*.c"
+            "*.h"
           ];
         };
 
@@ -94,6 +103,10 @@ let
             "LICENSE"
             "NOTICE"
             "*.in"
+            "*.scm"
+            "*.txt"
+            "*.c"
+            "*.h"
           ];
         };
 
@@ -105,6 +118,7 @@ let
           project
           pythonTools
           nodejs
+          wasiSdk
           ;
       };
     in
@@ -138,11 +152,13 @@ let
             toolPkgs.just
             toolPkgs.ruff
             pkgs.pkg-config
+            pkgs.tree-sitter
             pkgs.rustc
             pkgs.rustfmt
             pythonTools
             pkgs.uv
           ];
+        WASI_SDK_PATH = "${wasiSdk}";
         UV_PYTHON = "${pythonTools}/bin/python";
         shellHook = prepareEnvironment;
       };

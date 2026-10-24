@@ -1,6 +1,7 @@
 """Inspect tool provenance and render it without interpreting tool output as markup."""
 
 import importlib.metadata
+import os
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -40,6 +41,7 @@ class Tool:
     name: str
     origin: str
     arguments: tuple[str, ...] = ('--version',)
+    executable: str | None = None
 
 
 @dataclass(frozen=True)
@@ -66,7 +68,7 @@ def read_pins(lockfile: Path) -> tuple[Pin, ...]:
 
 
 def inspect_tool(tool: Tool, version: str | None = None) -> Report:
-    executable = shutil.which(tool.name)
+    executable = shutil.which(tool.executable or tool.name)
     if executable is None:
         return Report(tool.name, 'missing', None, tool.origin, 'executable not found')
     location = Path(executable)
@@ -87,7 +89,7 @@ def inspect_package(name: str) -> Report:
     return Report(
         name,
         package.version,
-        Path(str(package.locate_file(name))),
+        Path(str(package.locate_file(name.replace('-', '_')))),
         'uv.lock / uv2nix',
     )
 
@@ -113,17 +115,35 @@ def run(root: Path, console: Console) -> int:
     tools = (
         *(
             Tool(name, 'Nix shell')
-            for name in ('rustc', 'cargo', 'rustfmt', 'node', 'bash', 'git', 'pkg-config', 'direnv', 'uv', 'nix')
+            for name in (
+                'rustc',
+                'cargo',
+                'rustfmt',
+                'node',
+                'bash',
+                'git',
+                'pkg-config',
+                'direnv',
+                'uv',
+                'nix',
+                'tree-sitter',
+            )
         ),
         Tool('python', 'uv2nix environment'),
         *(Tool(name, 'nix-tools tool packages') for name in ('just', 'ruff', 'basedpyright')),
         Tool('cargo-clippy', 'Nix shell'),
         Tool('cc', 'Nix shell'),
         Tool('ld', 'Nix shell', ('-v',)),
+        Tool('wasi-clang', 'Nix WASI toolchain', executable=str(Path(os.environ['WASI_SDK_PATH']) / 'bin/clang')),
     )
     reports = tuple(inspect_tool(tool) for tool in tools)
+    if shutil.which('zed') is not None:
+        reports += (inspect_tool(Tool('zed', 'host bootstrap')),)
     release = next(pin.version for pin in pins if pin.name == 'nix-tools')
     reports += tuple(inspect_tool(Tool(name, 'nix-tools'), f'nix-tools {release}') for name in ('repofmt', 'repochk'))
-    reports += tuple(inspect_package(name) for name in ('rich', 'tyro', 'msgspec'))
+    reports += tuple(
+        inspect_package(name)
+        for name in ('rich', 'tyro', 'msgspec', 'fissix', 'tree-sitter', 'tree-sitter-c-sharp', 'tomli-w')
+    )
     render(console, pins, reports)
     return int(any(report.problem for report in reports))

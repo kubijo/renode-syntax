@@ -1,0 +1,216 @@
+==================
+Assignments and token precedence
+==================
+$boot ?= @https://example.org/boot.bin; echo $boot
+$count = -12e+3
+$ratio = +1.5e-2
+timer Elapsed 01:02:03.5
+sysbus Tag <0x10 16> "RAM"
+sysbus Tag <-2, +4> 'range'
+echo True false null trueSuffix 0xAf
+
+---
+
+(source_file
+  (assignment
+    (variable)
+    (assignment_operator)
+    (path))
+  (command_split)
+  (command
+    (literal)
+    (variable))
+  (assignment
+    (variable)
+    (assignment_operator)
+    (number))
+  (assignment
+    (variable)
+    (assignment_operator)
+    (number))
+  (command
+    (literal)
+    (literal)
+    (number))
+  (command
+    (literal)
+    (literal)
+    (range)
+    (string))
+  (command
+    (literal)
+    (literal)
+    (range)
+    (string))
+  (command
+    (literal)
+    (boolean)
+    (boolean)
+    (null)
+    (boolean)
+    (literal)
+    (number)))
+
+==================
+Paths, named arguments and comments
+==================
+:name: Example
+# A hash comment
+include $ORIGIN/../other.resc
+echo @a\ b; echo @https://example.org:123/a
+machine SdCardFromFile $image size=0x100 persistent=False name="disk"
+echoer echo help:topic
+
+---
+
+(source_file
+  (comment)
+  (comment)
+  (command
+    (literal)
+    (variable_path
+      (variable)))
+  (command
+    (literal)
+    (path))
+  (command_split)
+  (command
+    (literal)
+    (path))
+  (command
+    (literal)
+    (literal)
+    (variable)
+    (named_argument
+      (literal)
+      (number))
+    (named_argument
+      (literal)
+      (boolean))
+    (named_argument
+      (literal)
+      (string)))
+  (command
+    (literal)
+    (literal)
+    (literal)))
+
+==================
+Backtick commands
+==================
+$a = `python "print 1"`
+cpu AddHook `sysbus GetSymbolAddress "entry"` $hook
+echo `echo one` `echo two`
+
+---
+
+(source_file
+  (assignment
+    (variable)
+    (assignment_operator)
+    (execution
+      (execution_delimiter)
+      (execution_body)
+      (execution_delimiter)))
+  (command
+    (literal)
+    (literal)
+    (execution
+      (execution_delimiter)
+      (execution_body)
+      (execution_delimiter))
+    (variable))
+  (command
+    (literal)
+    (execution
+      (execution_delimiter)
+      (execution_body)
+      (execution_delimiter))
+    (execution
+      (execution_delimiter)
+      (execution_body)
+      (execution_delimiter))))
+
+==================
+Macro statements and opaque multiline arguments
+==================
+macro reset
+"""
+  sysbus LoadELF $bin
+  cpu AddHook `sysbus GetSymbolAddress "main"` $hook
+"""
+set hook
+"""
+if True:
+    print('Python kept opaque by set')
+"""
+machine LoadPlatformDescriptionFromString """
+uart: UART.Example @ sysbus 0x100
+    frequency: 123
+"""
+
+---
+
+(source_file
+  (macro_definition
+    (macro_keyword)
+    (literal)
+    (macro_body
+      (multiline_delimiter)
+      (command
+        (literal)
+        (literal)
+        (variable))
+      (command
+        (literal)
+        (literal)
+        (execution
+          (execution_delimiter)
+          (execution_body)
+          (execution_delimiter))
+        (variable))
+      (multiline_delimiter)))
+  (command
+    (literal)
+    (literal)
+    (multiline_string
+      (multiline_delimiter)
+      (string_content)
+      (multiline_delimiter)))
+  (command
+    (literal)
+    (literal)
+    (multiline_string
+      (multiline_delimiter)
+      (string_content)
+      (multiline_delimiter))))
+
+==================
+Python injection and quoted delimiters
+==================
+python """
+print('hello')
+value = "quoted"
+pair = '""'
+"""
+echo """content"""; echo done
+
+---
+
+(source_file
+  (python_command
+    (python_keyword)
+    (python_block
+      (multiline_delimiter)
+      (python_body)
+      (multiline_delimiter)))
+  (command
+    (literal)
+    (multiline_string
+      (multiline_delimiter)
+      (string_content)
+      (multiline_delimiter)))
+  (command_split)
+  (command
+    (literal)
+    (literal)))

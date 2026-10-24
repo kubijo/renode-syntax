@@ -1,0 +1,333 @@
+{
+  "rules": {
+    "CommentToken": [
+      {
+        "pattern": "#[^\\n]*",
+        "priority": 25,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 22
+        }
+      },
+      {
+        "pattern": ":[^\\n]*",
+        "priority": 1,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 92
+        }
+      }
+    ],
+    "ExecutionToken": [
+      {
+        "pattern": "`[^`\\n]*`",
+        "priority": 24,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 25
+        }
+      }
+    ],
+    "VariableToken": [
+      {
+        "pattern": "\\$(?:[0-9]|(?:[a-zA-Z])|_|\\.)+",
+        "priority": 23,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 28
+        }
+      }
+    ],
+    "LeftBraceToken": [
+      {
+        "pattern": "\\[",
+        "priority": 22,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 31
+        }
+      }
+    ],
+    "RightBraceToken": [
+      {
+        "pattern": "\\]",
+        "priority": 21,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 34
+        }
+      }
+    ],
+    "MultilineStringToken": [
+      {
+        "pattern": "\"\"\"(?s:.)(?:[^\"]|\"[^\"]|\"\"[^\"])*\"\"\"",
+        "priority": 20,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 37
+        }
+      }
+    ],
+    "MultilineStringTerminatorToken": [
+      {
+        "pattern": "\"\"\"",
+        "priority": 19,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 40
+        }
+      }
+    ],
+    "StringToken": [
+      {
+        "pattern": "'[^'\\\\]*(?:\\\\[^\\n][^'\\\\]*)*'",
+        "priority": 18,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 43
+        }
+      },
+      {
+        "pattern": "\"[^\"\\\\]*(?:\\\\[^\\n][^\"\\\\]*)*\"",
+        "priority": 17,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 44
+        }
+      }
+    ],
+    "AbsoluteRangeToken": [
+      {
+        "pattern": "<[\\p{Z}\\t\\n\\v\\f\\r\\x{85}]*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\p{Nd}+))[\\p{Z}\\t\\n\\v\\f\\r\\x{85}]*,[\\p{Z}\\t\\n\\v\\f\\r\\x{85}]*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\p{Nd}+))[\\p{Z}\\t\\n\\v\\f\\r\\x{85}]*>",
+        "priority": 16,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 47
+        }
+      }
+    ],
+    "RelativeRangeToken": [
+      {
+        "pattern": "<[\\p{Z}\\t\\n\\v\\f\\r\\x{85}]*(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:[+-]?\\p{Nd}+))[\\p{Z}\\t\\n\\v\\f\\r\\x{85}]+(?:(?:0x(?:[0-9]|(?:[a-fA-F]))+)|(?:\\+?\\p{Nd}+))[\\p{Z}\\t\\n\\v\\f\\r\\x{85}]*>",
+        "priority": 15,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 50
+        }
+      }
+    ],
+    "PathToken": [
+      {
+        "pattern": "@(?:\\\\ |[^\\p{Z}\\t\\n\\v\\f\\r\\x{85};])+",
+        "priority": 14,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 53
+        }
+      }
+    ],
+    "HexToken": [
+      {
+        "pattern": "0x(?:[0-9]|(?:[a-fA-F]))+",
+        "priority": 13,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 56
+        }
+      }
+    ],
+    "TimeIntervalToken": [
+      {
+        "pattern": "(?:(?:[0-9]+:)?[0-9]+:)[0-9]+(?:\\.[0-9]+)?",
+        "priority": 12,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 59
+        }
+      }
+    ],
+    "FloatToken": [
+      {
+        "pattern": "[+-]?(?:(?:\\p{Nd}+\\.(?:\\p{Nd}*)?(?:e[+-]?\\p{Nd}+)?))",
+        "priority": 11,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 62
+        }
+      }
+    ],
+    "DecimalIntegerToken": [
+      {
+        "pattern": "[+-]?\\p{Nd}+(?:e[+-]?\\p{Nd}+)?",
+        "priority": 10,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 65
+        }
+      }
+    ],
+    "BooleanToken": [
+      {
+        "pattern": "(?:true|false|True|False)",
+        "priority": 9,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 68
+        }
+      }
+    ],
+    "NullToken": [
+      {
+        "pattern": "null",
+        "priority": 8,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 71
+        }
+      }
+    ],
+    "EqualityToken": [
+      {
+        "pattern": "=",
+        "priority": 7,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 74
+        }
+      }
+    ],
+    "ConditionalEqualityToken": [
+      {
+        "pattern": "\\?=",
+        "priority": 6,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 77
+        }
+      }
+    ],
+    "CommandSplit": [
+      {
+        "pattern": ";",
+        "priority": 5,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 80
+        }
+      }
+    ],
+    "CommaToken": [
+      {
+        "pattern": ",",
+        "priority": 4,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 83
+        }
+      }
+    ],
+    "LiteralToken": [
+      {
+        "pattern": "[\\p{L}\\p{Mn}\\p{Nd}\\p{Pc}\\.\\-\\?][\\p{L}\\p{Mn}\\p{Nd}\\p{Pc}\\.\\-\\?:]*",
+        "priority": 3,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 86
+        }
+      }
+    ],
+    "Whitespace": [
+      {
+        "pattern": "[\\p{Z}\\t\\n\\v\\f\\r\\x{85}]+",
+        "priority": 2,
+        "source": {
+          "repository": "infrastructure",
+          "path": "src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs",
+          "line": 89
+        }
+      }
+    ]
+  },
+  "commands": [
+    "alias",
+    "allowPrivates",
+    "analyzers",
+    "autoSave",
+    "createPlatform",
+    "currentTime",
+    "displayImage",
+    "execute",
+    "help",
+    "include",
+    "lastLog",
+    "log",
+    "logFile",
+    "logLevel",
+    "logNetwork",
+    "mach",
+    "macro",
+    "numbersMode",
+    "path",
+    "pause",
+    "peripherals",
+    "printenv",
+    "python",
+    "quit",
+    "require",
+    "resd",
+    "reverseExecMode",
+    "runMacro",
+    "set",
+    "setAndRevertAfter",
+    "showAnalyzer",
+    "start",
+    "string",
+    "tags",
+    "using",
+    "verboseMode",
+    "version",
+    "watch",
+    "console_log",
+    "dump",
+    "dump_file",
+    "echo",
+    "get_environ",
+    "if",
+    "next_value",
+    "print",
+    "pyprint",
+    "sleep",
+    "str_contains",
+    "uart_connect"
+  ],
+  "multiline_delimiter": "\"\"\"",
+  "multiline_content": "(?:[^\"]|\"[^\"]|\"\"[^\"])+",
+  "execution_delimiter": "`",
+  "execution_content": "[^`\\n]+",
+  "inline_space": "[\\p{Z}\\t\\v\\f\\x{85}]+",
+  "path_suffix": "/(?:\\\\ |[^\\p{Z}\\t\\n\\v\\f\\r\\x{85};])+"
+}

@@ -1,0 +1,26 @@
+{
+  "grammars": [
+    {
+      "name": "resc",
+      "camelcase": "Resc",
+      "scope": "source.renode.resc",
+      "path": "tree-sitter/resc",
+      "file-types": [
+        "resc"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Renode monitor scripts",
+    "authors": [
+      {
+        "name": "kubijo"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/kubijo/renode-syntax"
+    }
+  }
+}

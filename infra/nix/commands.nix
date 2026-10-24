@@ -3,6 +3,7 @@
   project,
   pythonTools,
   nodejs,
+  wasiSdk,
 }:
 let
   inherit (builtins) toJSON;
@@ -95,6 +96,24 @@ let
     "infra/javascript/check-regex.mjs"
     "generated/renode.json"
   ];
+  parser =
+    action:
+    step "parser-${action}" [
+      python
+      "infra/python/treesitter.py"
+      action
+    ];
+  zed = step "zed-prepare" [
+    python
+    "infra/python/zed_extension.py"
+    "--compiler"
+    "${wasiSdk}/bin/clang"
+  ];
+  wasmCheck = step "zed-wasm" [
+    (lib.getExe nodejs)
+    "infra/javascript/check-wasm.mjs"
+    ".tmp/zed/extension/grammars/resc.wasm"
+  ];
   plans = {
     format = [ (format // { forward_arguments = true; }) ];
     inherit lint;
@@ -110,7 +129,32 @@ let
       regexCheck
       syntax
     ]
-    ++ corpus;
+    ++ corpus
+    ++ [
+      (parser "check")
+      (parser "test")
+      (parser "corpus")
+      zed
+      wasmCheck
+    ];
+    source-parser = [ (parser "generate") ];
+    source-parser-tests = [ (parser "update-tests") ];
+    test-parser = [ (parser "test") ];
+    test-parser-corpus = [ (parser "corpus") ];
+    zed-prepare = [
+      zed
+      wasmCheck
+    ];
+    zed-review = [
+      zed
+      wasmCheck
+      (step "zed-open" [
+        "zed"
+        "--user-data-dir"
+        ".tmp/zed/data"
+        "."
+      ])
+    ];
     test-syntax = [ syntax ];
     test-tooling = [ toolingTests ];
     test-runner = [ runnerTests ];
@@ -120,6 +164,7 @@ let
     source-check = [
       (source "check")
       regexCheck
+      (parser "check")
     ];
     python-lock = [
       (step "python-lock" [
@@ -165,7 +210,7 @@ lib.mapAttrs (
     pkgs.writeText "renode-${name}-plan.json" (toJSON {
       inherit steps;
     })
-  }"
+  }${lib.optionalString (name == "format") " --"}"
 ) plans
 // {
   doctor = command "doctor" "doctor";

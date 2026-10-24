@@ -1,0 +1,672 @@
+[
+  {
+    "type": "assignment",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_operator",
+          "named": true
+        },
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "comma",
+          "named": true
+        },
+        {
+          "type": "execution",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "multiline_string",
+          "named": true
+        },
+        {
+          "type": "named_argument",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "variable",
+          "named": true
+        },
+        {
+          "type": "variable_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assignment_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "command",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "comma",
+          "named": true
+        },
+        {
+          "type": "execution",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "multiline_string",
+          "named": true
+        },
+        {
+          "type": "named_argument",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "variable",
+          "named": true
+        },
+        {
+          "type": "variable_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "comment",
+    "named": true,
+    "extra": true,
+    "fields": {}
+  },
+  {
+    "type": "execution",
+    "named": true,
+    "fields": {
+      "close": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "execution_delimiter",
+            "named": true
+          }
+        ]
+      },
+      "open": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "execution_delimiter",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "execution_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "comma",
+          "named": true
+        },
+        {
+          "type": "execution",
+          "named": true
+        },
+        {
+          "type": "left_bracket",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "named_argument",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "right_bracket",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "variable",
+          "named": true
+        },
+        {
+          "type": "variable_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "macro_body",
+    "named": true,
+    "fields": {
+      "close": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "multiline_delimiter",
+            "named": true
+          }
+        ]
+      },
+      "open": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "multiline_delimiter",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "command",
+          "named": true
+        },
+        {
+          "type": "command_split",
+          "named": true
+        },
+        {
+          "type": "python_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "macro_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "macro_body",
+          "named": true
+        },
+        {
+          "type": "macro_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "multiline_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "multiline_delimiter",
+          "named": true
+        },
+        {
+          "type": "string_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "named_argument",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "comma",
+            "named": true
+          },
+          {
+            "type": "execution",
+            "named": true
+          },
+          {
+            "type": "list",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "named_argument",
+            "named": true
+          },
+          {
+            "type": "null",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "variable",
+            "named": true
+          },
+          {
+            "type": "variable_path",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "number",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "python_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "multiline_delimiter",
+          "named": true
+        },
+        {
+          "type": "python_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "python_body",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "python_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "comma",
+          "named": true
+        },
+        {
+          "type": "execution",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "named_argument",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "python_block",
+          "named": true
+        },
+        {
+          "type": "python_keyword",
+          "named": true
+        },
+        {
+          "type": "range",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "variable",
+          "named": true
+        },
+        {
+          "type": "variable_path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "range",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "command",
+          "named": true
+        },
+        {
+          "type": "command_split",
+          "named": true
+        },
+        {
+          "type": "macro_definition",
+          "named": true
+        },
+        {
+          "type": "python_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "variable_path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "boolean",
+    "named": true
+  },
+  {
+    "type": "comma",
+    "named": true
+  },
+  {
+    "type": "command_split",
+    "named": true
+  },
+  {
+    "type": "execution_body",
+    "named": true
+  },
+  {
+    "type": "execution_delimiter",
+    "named": true
+  },
+  {
+    "type": "left_bracket",
+    "named": true
+  },
+  {
+    "type": "literal",
+    "named": true
+  },
+  {
+    "type": "macro_keyword",
+    "named": true
+  },
+  {
+    "type": "multiline_delimiter",
+    "named": true
+  },
+  {
+    "type": "null",
+    "named": true
+  },
+  {
+    "type": "path",
+    "named": true
+  },
+  {
+    "type": "python_keyword",
+    "named": true
+  },
+  {
+    "type": "right_bracket",
+    "named": true
+  },
+  {
+    "type": "string_content",
+    "named": true
+  },
+  {
+    "type": "variable",
+    "named": true
+  }
+]
