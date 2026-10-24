@@ -7,3 +7,11 @@ syntax:
 # Test the tooling's diagnostics, lock parsing, and failure propagation.
 tooling:
     @renode-test-tooling
+
+# Test sentinel detection and the syntax runner's corpus input handling.
+runner:
+    @renode-test-runner
+
+# Check the complete pinned Renode corpus for leaked Sublime scopes (offline).
+corpus:
+    @renode-test-corpus

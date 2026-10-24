@@ -118,6 +118,9 @@ build output is never committed.
 
 Upstream checkouts are disposable inputs, not submodules. Fetch the tracked pins before generation or a first local
 quality-gate run; checks then work offline and reject modified inputs. Use `just source` to discover that workflow.
+Corpus preparation reads canonical Git blobs at both pins and records their identities under `.tmp/corpus/`. The Sublime
+gate appends ordinary source sentinels without closing delimiters and checks their scopes, including that monitor and
+embedded-language contexts have ended. It detects context leaks rather than validating Renode semantics.
 
 ### Grammars and editor support
 

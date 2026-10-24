@@ -8,7 +8,7 @@ format *paths:
 lint:
     @renode-lint
 
-# Check formatting, lint, Clippy, and all Sublime syntax assertions.
+# Run formatting, lint, tooling tests, syntax assertions, and the pinned corpus gate.
 check:
     @renode-check
 

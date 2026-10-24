@@ -1,6 +1,6 @@
 import 'prelude.just'
 
-# Fetch and validate the pinned upstream source inputs (network access).
+# Fetch the pinned extraction sources and complete Renode corpus (network access).
 fetch:
     renode-source-fetch
 

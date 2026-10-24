@@ -40,6 +40,33 @@ let
     "--"
     "sublime"
   ];
+  runnerTests = step "runner-tests" [
+    cargo
+    "test"
+    "--locked"
+    "--manifest-path"
+    "infra/syntax-test/Cargo.toml"
+  ];
+  corpus = [
+    (step "corpus-prepare" [
+      python
+      "infra/python/corpus.py"
+      "prepare"
+    ])
+    (step "corpus" [
+      cargo
+      "run"
+      "--release"
+      "--locked"
+      "--quiet"
+      "--manifest-path"
+      "infra/syntax-test/Cargo.toml"
+      "--"
+      "--corpus"
+      "sublime"
+      ".tmp/corpus/files0"
+    ])
+  ];
   toolingTests = step "tooling-tests" [
     python
     "-m"
@@ -78,12 +105,16 @@ let
     ++ lint
     ++ [
       toolingTests
+      runnerTests
       (source "check")
       regexCheck
       syntax
-    ];
+    ]
+    ++ corpus;
     test-syntax = [ syntax ];
     test-tooling = [ toolingTests ];
+    test-runner = [ runnerTests ];
+    test-corpus = corpus;
     source-fetch = [ (source "fetch") ];
     source-generate = [ (source "generate") ];
     source-check = [

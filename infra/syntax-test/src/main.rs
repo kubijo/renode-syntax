@@ -5,6 +5,9 @@
 //! Unlike Sublime, the header's grammar is resolved by file name,
 //! since the `Packages/…` prefix depends on what the clone is called.
 //! Assertion lines may be indented, so they can sit inside indentation-scoped blocks.
+//! `--corpus <syntax-dir> <files0>` checks pinned files followed by scope sentinels.
+
+mod corpus;
 
 use std::{
     env, fs,
@@ -20,20 +23,23 @@ use syntect::{
 
 fn main() -> ExitCode {
     let dirs: Vec<PathBuf> = env::args().skip(1).map(PathBuf::from).collect();
+    if dirs.first().is_some_and(|argument| argument == "--corpus") {
+        if dirs.len() != 3 {
+            eprintln!("usage: syntax-test --corpus <syntax-dir> <files0>");
+            return ExitCode::FAILURE;
+        }
+        return corpus::run(&dirs[1], &dirs[2]);
+    }
     if dirs.is_empty() {
         eprintln!("usage: syntax-test <dir>...");
         return ExitCode::FAILURE;
     }
 
-    let mut builder = SyntaxSet::load_defaults_newlines().into_builder();
+    let set = load_syntaxes(&dirs);
     let mut files = Vec::new();
     for dir in &dirs {
-        builder
-            .add_from_folder(dir, true)
-            .unwrap_or_else(|e| panic!("loading grammars from {}: {e}", dir.display()));
         collect_files(dir, &mut files);
     }
-    let set = builder.build();
 
     let grammars: Vec<&PathBuf> = files
         .iter()
@@ -59,6 +65,16 @@ fn main() -> ExitCode {
     } else {
         ExitCode::FAILURE
     }
+}
+
+fn load_syntaxes(dirs: &[PathBuf]) -> SyntaxSet {
+    let mut builder = SyntaxSet::load_defaults_newlines().into_builder();
+    for dir in dirs {
+        builder
+            .add_from_folder(dir, true)
+            .unwrap_or_else(|e| panic!("loading grammars from {}: {e}", dir.display()));
+    }
+    builder.build()
 }
 
 fn collect_files(dir: &Path, out: &mut Vec<PathBuf>) {
@@ -114,7 +130,8 @@ fn run_test(set: &SyntaxSet, grammars: &[&PathBuf], test: &Path) -> (usize, usiz
     let (mut run, mut failed) = (0, 0);
 
     for (index, line) in contents.split_inclusive('\n').enumerate() {
-        let char_stacks = scope_stacks(&mut state, &mut stack, set, line);
+        let char_stacks = scope_stacks(&mut state, &mut stack, set, line)
+            .unwrap_or_else(|error| panic!("{}:{}: {error}", test.display(), index + 1));
         let Some(assertion) = parse_assertion(line, token) else {
             tested = char_stacks;
             tested_line_no = index + 1;
@@ -163,22 +180,25 @@ fn scope_stacks(
     stack: &mut ScopeStack,
     set: &SyntaxSet,
     line: &str,
-) -> Vec<ScopeStack> {
-    let ops = state.parse_line(line, set).expect("parse line");
+) -> Result<Vec<ScopeStack>, String> {
+    let ops = state
+        .parse_line(line, set)
+        .map_err(|error| error.to_string())?;
     let mut by_byte = Vec::with_capacity(line.len());
     let mut ops = ops.iter().peekable();
     for byte in 0..line.len() {
         while let Some((_, op)) = ops.next_if(|(at, _)| *at <= byte) {
-            stack.apply(op).expect("apply scope op");
+            stack.apply(op).map_err(|error| error.to_string())?;
         }
         by_byte.push(stack.clone());
     }
     for (_, op) in ops {
-        stack.apply(op).expect("apply scope op");
+        stack.apply(op).map_err(|error| error.to_string())?;
     }
-    line.char_indices()
+    Ok(line
+        .char_indices()
         .map(|(byte, _)| by_byte[byte].clone())
-        .collect()
+        .collect())
 }
 
 struct Assertion<'a> {
