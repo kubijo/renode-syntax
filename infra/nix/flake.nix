@@ -59,7 +59,11 @@ let
         format = {
           walk = "filesystem";
           # Preserve the migrated grammars and assertion columns byte-for-byte.
-          exclude = [ "sublime/**" ];
+          exclude = [
+            # A linked worktree has a .git pointer file rather than a directory.
+            ".git"
+            "sublime/**"
+          ];
           rust = {
             exe = lib.getExe pkgs.rustfmt;
             options = [

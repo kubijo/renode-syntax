@@ -1,0 +1,8 @@
+{
+  "base_renode": "6805dea7d00f473a31e11af1b3cba17bee7e7be1",
+  "target_renode": "04cafbb29ea64a1547cd3bd1232f8c126bf7f755",
+  "expected_files": [
+    "generated/renode.json",
+    "infra/renode-pins.json"
+  ]
+}

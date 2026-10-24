@@ -152,6 +152,17 @@ embedded-language contexts have ended. It detects context leaks rather than vali
   silently. Gate failures on new upstream content open an issue.
 - Workflow YAML stays declarative; orchestration lives in checked scripts under `infra/`.
 
+The weekly runner installs Nix and uses Determinate's Magic Nix Cache with GitHub caching enabled and FlakeHub disabled,
+following `garmin-toolbox`. Local sync rehearsals run in isolated worktrees under `.tmp/sync/` and save the proposed
+patch, PR or issue text and validation logs under `.tmp/sync/artifacts/`. Discover entry points with `just sync`.
+
+Infrastructure advances to the gitlink recorded by the selected Renode commit. Structural changes block regeneration and
+publication of the update PR; failed extraction or validation also produces a review issue. Publication updates the
+reserved `automation/renode-sync` branch without force pushing and identifies its PR and issues through ownership
+markers. A manual workflow run defaults to a dry run; the weekly schedule publishes. GitHub Actions must be allowed to
+create pull requests in the repository settings. A local replay exercises the checked older-pin fixture without GitHub
+writes; actual hosted-runner caching and publication require a workflow run to verify.
+
 ### Tooling
 
 - Nix flake with `kubijo/nix-tools` pinned to a release tag (`v0.10.0` in sibling repositories), following its packaging

@@ -203,15 +203,39 @@ let
         exec ${python} "$RENODE_SYNTAX_ROOT/infra/python/manage.py" ${arguments} "$@"
       '';
     };
+  fromPlans = lib.mapAttrs (
+    name: steps:
+    command name "run --plan ${
+      pkgs.writeText "renode-${name}-plan.json" (toJSON {
+        inherit steps;
+      })
+    }${lib.optionalString (lib.any (item: item.forward_arguments or false) steps) " --"}"
+  );
+  commands = fromPlans plans;
+  sync = action: [
+    (
+      (step "sync-${action}" [
+        python
+        "infra/python/upstream_sync.py"
+        action
+        "--gate"
+        (lib.getExe commands.check)
+        "--python-environment"
+        "${pythonTools}"
+      ])
+      // {
+        forward_arguments = action == "dry-run";
+      }
+    )
+  ];
 in
-lib.mapAttrs (
-  name: steps:
-  command name "run --plan ${
-    pkgs.writeText "renode-${name}-plan.json" (toJSON {
-      inherit steps;
-    })
-  }${lib.optionalString (name == "format") " --"}"
-) plans
+commands
+// fromPlans {
+  sync-dry-run = sync "dry-run";
+  sync-replay = sync "replay";
+  sync-publish = sync "publish";
+  sync-ci = sync "ci";
+}
 // {
   doctor = command "doctor" "doctor";
 }
