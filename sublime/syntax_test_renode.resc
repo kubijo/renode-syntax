@@ -1,0 +1,102 @@
+# SYNTAX TEST "Packages/Renode/RenodeScript.sublime-syntax"
+
+:name: Demo board
+# <- comment.line punctuation.definition.comment
+#^^^^^^^^^^^^^^^^ comment.line
+
+using sysbus
+# <- support.function.builtin
+#^^^^ support.function.builtin
+#     ^^^^^^ source.renode.resc - support - variable
+
+$name?="board"
+# <- variable.other punctuation.definition.variable
+#^^^^ variable.other
+#    ^^ keyword.operator.assignment.conditional
+#      ^^^^^^^ string.quoted.double
+
+mach create $name
+# <- support.function.builtin
+#    ^^^^^^ source.renode.resc - support
+
+machine LoadPlatformDescription @platforms/boards/demo.repl
+# <- variable.other.object
+#       ^^^^^^^^^^^^^^^^^^^^^^^ variable.function
+#                               ^ string.unquoted.path punctuation.definition.string.begin
+#                                ^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.path
+
+$bin?=@https://example.com/fw.elf
+#     ^ punctuation.definition.string.begin
+#      ^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.path - comment
+
+cpu PerformanceInMips 125 # trailing
+# <- variable.other.object
+#   ^^^^^^^^^^^^^^^^^ variable.function
+#                     ^^^ constant.numeric.integer.decimal
+#                         ^^^^^^^^^^ comment.line
+
+LoadELF $bin
+# <- variable.function
+
+$id = `python "print 1"`
+#     ^ meta.interpolation punctuation.section.interpolation.begin
+#      ^^^^^^ meta.interpolation support.function.builtin
+#                      ^ meta.interpolation punctuation.section.interpolation.end
+
+sysbus Tag <0x10 0x4> "A:B" 0x0 # ok
+#          ^^^^^^^^^^ meta.range
+#           ^^^^ constant.numeric.integer.hexadecimal
+#                     ^^^^^ string.quoted.double - comment
+
+emulation RunFor "00:00:01"; start
+#                          ^ punctuation.terminator
+#                            ^^^^^ support.function.builtin
+
+emulation RunFor 00:00:01.5 -1.5e3
+#                ^^^^^^^^^^ constant.numeric.time
+#                           ^^^^^^ constant.numeric.float
+
+$flag = true; $other = trueValue
+#       ^^^^ constant.language.boolean
+#                      ^^^^^^^^^ source.renode.resc - constant
+
+macro reset
+# <- support.function.builtin
+#     ^^^^^ entity.name.function
+"""
+# <- meta.block.macro punctuation.section.block.begin
+    sysbus LoadELF $bin
+#   ^^^^^^ meta.block.macro variable.other.object
+"""
+# <- meta.block.macro punctuation.section.block.end
+
+runMacro $reset
+# <- support.function.builtin
+
+python """
+# <- support.function.builtin
+#      ^^^ string.quoted.triple punctuation.definition.string.begin
+import os
+# <- source.python.embedded keyword.control.import
+"""
+# <- string.quoted.triple punctuation.definition.string.end
+
+echo "loaded"
+# <- support.function.builtin
+#^^^ support.function.builtin
+
+if `str_contains $global.name "ECUA"`
+# <- support.function.builtin
+#   ^^^^^^^^^^^^ meta.interpolation support.function.builtin
+
+dump_file x.bin; printenv; print "x"
+# <- support.function.builtin
+#^^^^^^^^ support.function.builtin
+#                ^^^^^^^^ support.function.builtin
+#                          ^^^^^ support.function.builtin
+
+sleep 1
+# <- support.function.builtin
+
+echoer Run
+# <- variable.other.object - support

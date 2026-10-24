@@ -1,0 +1,98 @@
+// SYNTAX TEST "Packages/Renode/RenodePlatform.sublime-syntax"
+
+using "./base.repl"
+// <- keyword.control.import
+//    ^^^^^^^^^^^^^ string.quoted.double
+
+/* block
+   comment */
+// <- comment.block
+//         ^^ comment.block punctuation.definition.comment.end
+
+local cpu: CPU.CortexM @ sysbus as "core0" // trailing
+// <- storage.modifier
+//    ^^^ entity.name.variable
+//         ^^^^^^^^^^^ support.class
+//                     ^ keyword.operator.registration
+//                              ^^ keyword.other
+//                                         ^^^^^^^^^^^ comment.line.double-slash
+    cpuType: "a\"b"
+//  ^^^^^^^ variable.other.member
+//             ^^ constant.character.escape
+    mode: .Secure
+//        ^^^^^^^ constant.other.enum
+    priv: PrivilegedArchitecture.Priv1_10
+//        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ constant.other.enum
+    description: '''multi
+line'''
+// <- string.quoted.triple - source.python
+//  ^^^ string.quoted.triple punctuation.definition.string.end
+    gpio: new GPIOPort.Foo { pins: 32; on: true }
+//        ^^^ keyword.other.new
+//            ^^^^^^^^^^^^ support.class
+//                           ^^^^ variable.other.member
+//                                     ^^ variable.other.member
+//                                         ^^^^ constant.language.boolean
+    0 -> nvic#1@3 | other@4
+//    ^^ keyword.operator.arrow
+//           ^ keyword.operator.local-index
+//             ^ keyword.operator.registration
+//                ^ keyword.operator.multiplex
+    [0-31] -> plic@[8-39]
+//   ^ constant.numeric
+//    ^ keyword.operator.range
+//     ^^ constant.numeric
+    IRQ -> none
+//         ^^^^ constant.language.null
+    list: [1, empty, -0x1F, 2.5]
+//            ^^^^^ constant.language
+//                   ^^^^^ constant.numeric.integer.hexadecimal
+//                          ^^^ constant.numeric.decimal
+
+sysbus:
+    reset add:
+//  ^^^^^ keyword.other
+//        ^^^ storage.modifier
+//           ^ punctuation.separator.key-value
+    init:
+        ApplySVD @https://x/y.svd
+        // <- meta.block.monitor variable.function
+        //       ^^^^^^^^^^^^^^^^ meta.block.monitor string.unquoted.path - comment
+
+        Tag <0x50, 0x5f> "USB:RESET" // why
+        // <- meta.block.monitor variable.function
+        //  ^^^^^^^^^^^^ meta.block.monitor meta.range
+        //               ^^^^^^^^^^^ meta.block.monitor string.quoted.double
+        //                           ^^^^^^ meta.block.monitor comment.line.double-slash
+    reset: { sysbus LoadELF $bin; cpu Reset }
+//  ^^^^^ keyword.other - meta.block
+//         ^ meta.block.monitor punctuation.section.block.begin
+//           ^^^^^^ meta.block.monitor variable.other.object
+//                  ^^^^^^^ meta.block.monitor variable.function
+//                                ^^^ variable.other.object
+//                                          ^ punctuation.section.block.end
+
+next: Memory.MappedMemory @ sysbus <0x0, +0x100>
+//                                 ^^^^^^^^^^^^^ meta.range
+//                                       ^ keyword.operator.arithmetic
+
+initRom: Memory.MappedMemory @ sysbus 0x0
+// <- entity.name.variable
+
+init:
+// <- keyword.other - entity
+
+adc: Python.PythonPeripheral @ sysbus 0x4000
+    size: 0x100
+    script: '''
+//  ^^^^^^ variable.other.member
+//          ^^^ string.quoted.triple punctuation.definition.string.begin
+if request.IsRead:
+// <- source.python.embedded keyword.control
+    request.Value = 7 // 2
+//                    ^^ source.python.embedded keyword.operator - comment
+    s = "\'''"
+x = 1
+// <- source.python.embedded
+'''
+// <- string.quoted.triple punctuation.definition.string.end - source.python

@@ -1,0 +1,211 @@
+%YAML 1.2
+---
+# Renode monitor scripts.
+# Token order mirrors the monitor tokenizer:
+# renode-infrastructure src/Emulator/Extensions/UserInterface/Tokenizer/Tokenizer.cs
+name: Renode Script
+file_extensions:
+  - resc
+scope: source.renode.resc
+
+variables:
+  literal: '[\w.\-?][\w.\-?:]*'
+  literal_end: '(?![\w.\-?:])'
+  # `{` never occurs in scripts; it opens brace-mode `init:` blocks in Renode Platform files.
+  statement_start: '(?:^|(?<=[;`{]))[ \t]*'
+  # Full names registered in Monitor.cs and UserInterface/Commands,
+  # then the `mc_*` commands of the default scripts/monitor.py;
+  # short aliases (`s`, `p`, `q`) would flag peripheral names.
+  builtin: |-
+    (?x:
+      allowPrivates|alias|analyzers|autoSave|createPlatform|currentTime|displayImage|execute
+      |help|include|lastLog|log|logFile|logLevel|logNetwork|mach|macro|numbersMode|path|pause
+      |peripherals|printenv|python|quit|require|resd|reverseExecMode|runMacro|set
+      |setAndRevertAfter|showAnalyzer|start|string|tags|using|verboseMode|version|watch
+      |console_log|dump|dump_file|echo|get_environ|if|next_value|print|pyprint|sleep
+      |str_contains|uart_connect
+    )
+  number: '(?:0x\h+|[+-]?\d+)'
+
+contexts:
+  main:
+    - include: statements
+
+  statements:
+    - include: hash-comments
+    - include: python-block
+    - include: macro-definition
+    - include: builtin-command
+    - include: method-call
+    - include: tokens
+
+  hash-comments:
+    - match: '#'
+      scope: punctuation.definition.comment.renode-resc
+      push: line-comment
+
+  colon-comments:
+    - match: ':'
+      scope: punctuation.definition.comment.renode-resc
+      push: line-comment
+
+  line-comment:
+    - meta_include_prototype: false
+    - meta_scope: comment.line.renode-resc
+    - match: $\n?
+      pop: true
+
+  python-block:
+    - match: '{{statement_start}}(python)[ \t]+(""")'
+      captures:
+        1: support.function.builtin.renode-resc
+        2: string.quoted.triple.renode-resc punctuation.definition.string.begin.renode-resc
+      embed: scope:source.python
+      embed_scope: source.python.embedded.renode-resc
+      escape: '"""'
+      escape_captures:
+        0: string.quoted.triple.renode-resc punctuation.definition.string.end.renode-resc
+
+  macro-definition:
+    - match: '{{statement_start}}(macro)[ \t]+({{literal}})'
+      captures:
+        1: support.function.builtin.renode-resc
+        2: entity.name.function.renode-resc
+      push: macro-body-start
+
+  macro-body-start:
+    - match: '"""'
+      scope: punctuation.section.block.begin.renode-resc
+      set: macro-body
+    - include: hash-comments
+    - include: colon-comments
+    - match: '(?=\S)'
+      pop: true
+
+  macro-body:
+    - meta_scope: meta.block.macro.renode-resc
+    - match: '"""'
+      scope: punctuation.section.block.end.renode-resc
+      pop: true
+    - include: statements
+
+  builtin-command:
+    - match: '{{statement_start}}({{builtin}}){{literal_end}}'
+      captures:
+        1: support.function.builtin.renode-resc
+
+  # Renode methods and properties are PascalCase: `sysbus LoadELF`, `cpu PerformanceInMips`.
+  # The object is implicit after `using sysbus` and inside platform `init:` blocks.
+  method-call:
+    - match: '{{statement_start}}({{literal}})[ \t]+([A-Z]\w*){{literal_end}}'
+      captures:
+        1: variable.other.object.renode-resc
+        2: variable.function.renode-resc
+    - match: '{{statement_start}}([A-Z]\w*){{literal_end}}'
+      captures:
+        1: variable.function.renode-resc
+
+  tokens:
+    - include: execution
+    - include: variable-references
+    - match: '\['
+      scope: punctuation.section.brackets.begin.renode-resc
+    - match: '\]'
+      scope: punctuation.section.brackets.end.renode-resc
+    - include: strings
+    - include: ranges
+    - include: paths
+    - include: numbers
+    - match: '(?:true|false|True|False){{literal_end}}'
+      scope: constant.language.boolean.renode-resc
+    - match: 'null{{literal_end}}'
+      scope: constant.language.null.renode-resc
+    - match: '\?='
+      scope: keyword.operator.assignment.conditional.renode-resc
+    - match: '='
+      scope: keyword.operator.assignment.renode-resc
+    - match: ';'
+      scope: punctuation.terminator.renode-resc
+    - match: ','
+      scope: punctuation.separator.renode-resc
+    - match: '{{literal}}'
+    # Literals may contain `:`, so a colon only starts a comment outside one.
+    - include: colon-comments
+
+  execution:
+    - match: '`'
+      scope: punctuation.section.interpolation.begin.renode-resc
+      push:
+        - meta_scope: meta.interpolation.renode-resc
+        - match: '`'
+          scope: punctuation.section.interpolation.end.renode-resc
+          pop: true
+        - match: $
+          pop: true
+        - include: statements
+
+  variable-references:
+    - match: '(\$)[\w.]+'
+      scope: variable.other.renode-resc
+      captures:
+        1: punctuation.definition.variable.renode-resc
+
+  strings:
+    - match: '"""'
+      scope: punctuation.definition.string.begin.renode-resc
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.triple.renode-resc
+        - match: '"""'
+          scope: punctuation.definition.string.end.renode-resc
+          pop: true
+    - match: '"'
+      scope: punctuation.definition.string.begin.renode-resc
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.double.renode-resc
+        - match: '\\.'
+          scope: constant.character.escape.renode-resc
+        - match: '"'
+          scope: punctuation.definition.string.end.renode-resc
+          pop: true
+    - match: "'"
+      scope: punctuation.definition.string.begin.renode-resc
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.single.renode-resc
+        - match: '\\.'
+          scope: constant.character.escape.renode-resc
+        - match: "'"
+          scope: punctuation.definition.string.end.renode-resc
+          pop: true
+
+  ranges:
+    - match: '<(?=\s*{{number}}\s*(?:,\s*|\s+)[+-]?{{number}}\s*>)'
+      scope: punctuation.section.range.begin.renode-resc
+      push:
+        - meta_scope: meta.range.renode-resc
+        - match: '>'
+          scope: punctuation.section.range.end.renode-resc
+          pop: true
+        - match: ','
+          scope: punctuation.separator.renode-resc
+        - match: '\+(?=\s*\d)'
+          scope: keyword.operator.arithmetic.renode-resc
+        - include: numbers
+
+  paths:
+    - match: '(@)(?:(?!;)(?:\\ |\S))+'
+      scope: string.unquoted.path.renode-resc
+      captures:
+        1: punctuation.definition.string.begin.renode-resc
+
+  numbers:
+    - match: '0x\h+'
+      scope: constant.numeric.integer.hexadecimal.renode-resc
+    - match: '(?:(?:\d+:)?\d+:)\d+(?:\.\d+)?'
+      scope: constant.numeric.time.renode-resc
+    - match: '[+-]?\d+\.\d*(?:e[+-]?\d+)?'
+      scope: constant.numeric.float.renode-resc
+    - match: '[+-]?\d+(?:e[+-]?\d+)?'
+      scope: constant.numeric.integer.decimal.renode-resc

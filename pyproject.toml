@@ -1,0 +1,28 @@
+[project]
+name = "renode-syntax-tooling"
+version = "0.1.0"
+description = "Renode syntax repository support tools"
+requires-python = "==3.15.*"
+dependencies = ["msgspec", "rich", "tyro"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+cache-dir = ".tmp/cache/ruff"
+line-length = 119
+preview = true
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.basedpyright]
+include = ["."]
+exclude = [".git", ".tmp"]
+venvPath = ".tmp/venv"
+venv = "nix"
+pythonVersion = "3.15"
+pythonPlatform = "All"
+typeCheckingMode = "strict"
+failOnWarnings = true
+enableTypeIgnoreComments = false
