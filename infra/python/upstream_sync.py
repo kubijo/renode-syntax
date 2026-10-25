@@ -57,8 +57,10 @@ def workspace(root: Path) -> Path:
     checkout = Path(tempfile.mkdtemp(prefix='update-', dir=runs)) / 'worktree'
     _ = upstream.git(root, 'worktree', 'add', '--quiet', '--detach', str(checkout), 'HEAD')
     # Include local tooling edits in dry runs without staging them or changing the caller's branch.
-    names = upstream.git(root, 'ls-files', '-z', '--cached', '--others', '--exclude-standard').split('\0')
-    for name in filter(None, names):
+    names = set(upstream.git(root, 'ls-files', '-z', '--cached', '--others', '--exclude-standard').split('\0'))
+    # Staged deletions are absent from the caller's index but still exist at HEAD.
+    names.update(upstream.git(checkout, 'ls-files', '-z').split('\0'))
+    for name in sorted(filter(None, names)):
         source, destination = root / name, checkout / name
         if destination.is_file() or destination.is_symlink():
             destination.unlink()

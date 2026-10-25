@@ -186,7 +186,7 @@ mod tests {
             let root = PathBuf::from(
                 env::var_os("RENODE_SYNTAX_ROOT").expect("run tests in the Nix shell"),
             );
-            load_syntaxes(&[root.join("sublime")])
+            load_syntaxes(&[root.join("integrations/sublime")])
         })
     }
 

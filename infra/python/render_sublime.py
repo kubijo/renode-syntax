@@ -144,5 +144,6 @@ def grammars(root: Path, data: RenodeData) -> dict[str, bytes]:
         if not consumed and (rule.kind != 'Whitespace' or index != 0):
             raise SourceError(f'The Sublime templates do not account for upstream token {key}')
     return {
-        f'sublime/{name}.sublime-syntax': render(template, values).encode() for name, template in templates.items()
+        f'integrations/sublime/{name}.sublime-syntax': render(template, values).encode()
+        for name, template in templates.items()
     }

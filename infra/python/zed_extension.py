@@ -31,17 +31,17 @@ class Extension(msgspec.Struct, forbid_unknown_fields=True):
 
 
 def prepare(root: Path, compiler: Path, console: Console) -> Path:
-    metadata = msgspec.toml.decode((root / 'zed/extension.toml').read_bytes(), type=Extension)
+    metadata = msgspec.toml.decode((root / 'integrations/zed/extension.toml').read_bytes(), type=Extension)
     revision = subprocess.run(
         ('git', 'rev-parse', 'HEAD'), cwd=root, capture_output=True, text=True, check=True
     ).stdout.strip()
     digest = hashlib.sha256()
-    for directory in ('zed', *(f'tree-sitter/{name}' for name in GRAMMARS)):
+    for directory in ('integrations/zed', *(f'tree-sitter/{name}' for name in GRAMMARS)):
         for path in sorted((root / directory).rglob('*')):
             if path.is_file():
                 digest.update(path.relative_to(root).as_posix().encode() + b'\0' + path.read_bytes() + b'\0')
     destination = root / '.tmp/zed/builds' / (revision[:12] + '-' + digest.hexdigest()[:12]) / 'extension'
-    shutil.copytree(root / 'zed', destination, dirs_exist_ok=True)
+    shutil.copytree(root / 'integrations/zed', destination, dirs_exist_ok=True)
     for name in GRAMMARS:
         prepare_grammar(root, destination, metadata, revision, name, compiler)
     _ = (destination / 'extension.toml').write_bytes(msgspec.toml.encode(metadata))

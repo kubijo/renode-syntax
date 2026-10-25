@@ -121,5 +121,5 @@ def products(root: Path, data: RenodeData) -> dict[str, bytes]:
     builtins = '\n((command name: (literal) @keyword)\n  (#any-of? @keyword\n' + names + '))\n'
     return {
         'generated/resc.json': msgspec.json.format(msgspec.json.encode(lexicon(data)), indent=2) + b'\n',
-        'zed/languages/resc/highlights.scm': (template + builtins).encode(),
+        'integrations/zed/languages/resc/highlights.scm': (template + builtins).encode(),
     }

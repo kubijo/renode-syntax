@@ -32,7 +32,7 @@ class PlatformTests(unittest.TestCase):
 
     def captures(self, filename: str, source: str) -> dict[str, list[str]]:
         tree = self.parse(source)
-        query = Query(self.grammar.language, (ROOT / 'zed/languages/repl' / filename).read_text())
+        query = Query(self.grammar.language, (ROOT / 'integrations/zed/languages/repl' / filename).read_text())
         return {
             name: [text(node) for node in sorted(nodes, key=lambda node: node.start_byte)]
             for name, nodes in QueryCursor(query).captures(tree.root_node).items()
@@ -86,7 +86,7 @@ class PlatformTests(unittest.TestCase):
     def test_injection_matches_keep_fragments_and_blocks_separate(self) -> None:
         source = "p:\n    init:\n        echo \"a\" // parent\n        // between\n        echo \"b\"\n    reset:\n        echo \"c\"\n    script: '''print(\"Python\")'''\n    other: '''opaque'''\n"
         tree = self.parse(source)
-        query = Query(self.grammar.language, (ROOT / 'zed/languages/repl/injections.scm').read_text())
+        query = Query(self.grammar.language, (ROOT / 'integrations/zed/languages/repl/injections.scm').read_text())
         matches = QueryCursor(query).matches(tree.root_node)
         groups = monitor_ranges(ROOT, self.grammar, tree)
         self.assertEqual(len(groups), 2)
@@ -110,7 +110,7 @@ class PlatformTests(unittest.TestCase):
         tree = self.parse(source)
         body = next(walk(tree.root_node, 'monitor_body'))
         fragments = tuple(walk(body, 'monitor_text'))
-        query = Query(self.grammar.language, (ROOT / 'zed/languages/repl/injections.scm').read_text())
+        query = Query(self.grammar.language, (ROOT / 'integrations/zed/languages/repl/injections.scm').read_text())
         # Zed queries changed regions separately. Each fragment must identify its
         # containing body, so it can merge ranges independently of query batching.
         for fragment in fragments:
@@ -124,7 +124,7 @@ class PlatformTests(unittest.TestCase):
     def test_review_fixture_exercises_both_injections_and_both_block_modes(self) -> None:
         source = (ROOT / 'infra/zed/review.repl').read_text()
         tree = self.parse(source)
-        query = Query(self.grammar.language, (ROOT / 'zed/languages/repl/injections.scm').read_text())
+        query = Query(self.grammar.language, (ROOT / 'integrations/zed/languages/repl/injections.scm').read_text())
         groups = monitor_ranges(ROOT, self.grammar, tree)
         python_count = 0
         for nodes in groups:

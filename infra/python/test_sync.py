@@ -52,6 +52,28 @@ def write_products(root: Path, pins: Pins) -> None:
 
 
 class ProposalTests(unittest.TestCase):
+    def test_workspace_omits_files_removed_from_the_index(self) -> None:
+        parent = ROOT / '.tmp/sync/snapshot-tests'
+        parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=parent) as temporary:
+            root = Path(temporary)
+            current = root / 'integrations/new.el'
+            current.parent.mkdir()
+            _ = current.write_text('new')
+
+            def git(directory: Path, *arguments: str) -> str:
+                if arguments[0] == 'worktree':
+                    old = Path(arguments[-2]) / 'zed/old.el'
+                    old.parent.mkdir(parents=True)
+                    _ = old.write_text('old')
+                    return ''
+                return 'integrations/new.el\0' if directory == root else 'zed/old.el\0'
+
+            with patch('upstream.git', side_effect=git):
+                checkout = upstream_sync.workspace(root)
+            self.assertEqual((checkout / 'integrations/new.el').read_text(), 'new')
+            self.assertFalse((checkout / 'zed/old.el').exists())
+
     def test_product_collection_includes_platform_parser_scanner_and_generated_queries(self) -> None:
         products = sync_model.products(ROOT)
         for name in (
@@ -59,7 +81,7 @@ class ProposalTests(unittest.TestCase):
             'tree-sitter/repl/src/scanner.c',
             'tree-sitter/repl/src/scanner-config.h',
             'generated/repl.json',
-            'zed/languages/repl/brackets.scm',
+            'integrations/zed/languages/repl/brackets.scm',
         ):
             self.assertIn(name, products)
 

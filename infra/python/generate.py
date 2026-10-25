@@ -8,6 +8,7 @@ from typing import Literal
 
 import csharp_source
 import msgspec
+import render_emacs
 import render_repl
 import render_treesitter
 import tyro
@@ -55,6 +56,12 @@ def products(root: Path) -> dict[str, bytes]:
     result.update(grammars(root, data))
     result.update(render_treesitter.products(root, data))
     result.update(render_repl.products(root, data))
+    result.update(
+        render_emacs.products(
+            data,
+            msgspec.json.decode(result['generated/repl.json'], type=render_repl.ReplLexicon),
+        )
+    )
     return result
 
 

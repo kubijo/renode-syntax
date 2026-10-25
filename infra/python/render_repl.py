@@ -210,8 +210,8 @@ def products(root: Path, data: RenodeData) -> dict[str, bytes]:
     brackets += '(multiline_string ' + quoted(result.multiquote.value) + ' @open (multiline_end) @close)\n'
     return {
         'generated/repl.json': msgspec.json.format(msgspec.json.encode(result), indent=2) + b'\n',
-        'zed/languages/repl/highlights.scm': (
+        'integrations/zed/languages/repl/highlights.scm': (
             template + '\n[\n' + keywords + '\n] @keyword\n\n[\n' + punctuation + '\n] @punctuation.delimiter\n'
         ).encode(),
-        'zed/languages/repl/brackets.scm': brackets.encode(),
+        'integrations/zed/languages/repl/brackets.scm': brackets.encode(),
     }

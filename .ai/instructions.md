@@ -8,9 +8,9 @@ report changes and check results, propose the next concrete step, then stop.
 
 - Keep agent entry points as relative symlinks to this file. Shared instructions and repository skills live under
   `.ai/`.
-- Product directories (`sublime/`, `tree-sitter/`, `zed/`, `generated/`) hold only product files. The whole repository
-  is cloned into Sublime's `Packages/` and bat's syntaxes directory: never put `.sublime-syntax`, `.tmPreferences` or
-  `.sublime-settings` files outside `sublime/`, and never commit build output.
+- Product directories (`integrations/`, `tree-sitter/`, `generated/`) hold product files and context-local Just modules.
+  The whole repository is cloned into Sublime's `Packages/` and bat's syntaxes directory: never put `.sublime-syntax`,
+  `.tmPreferences` or `.sublime-settings` files outside `integrations/sublime/`, and never commit build output.
 - Keep reusable automation tracked under `infra/`. Preserve native CLI and IDE configuration discovery; put explicitly
   loaded configuration under `infra/` and pass its paths explicitly. Keep a config at the root only when its tool cannot
   be pointed elsewhere.
@@ -30,7 +30,8 @@ report changes and check results, propose the next concrete step, then stop.
 
 - Nix defines commands and dependencies; `just` lists maintainer entry points as one-line calls to those commands.
   Assume the Nix shell is active. The root justfile routes modules; every module imports `infra/just/prelude.just`. Put
-  procedures in checked-in support tooling.
+  module justfiles in their context directories wherever cleanly applicable. Put procedures in checked-in support
+  tooling.
 - Never run heredocs, inline interpreter scripts or piped source, including for diagnostics.
 - Run prepared validation targets bare and inspect their saved output afterwards.
 - Ask before long-running, network-heavy or destructive commands. Never start watchers or servers unasked.

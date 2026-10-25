@@ -28,6 +28,25 @@ let
           ;
       };
       nodejs = pkgs.nodejs_26;
+      emacsPackages = pkgs.emacsPackagesFor pkgs.emacs-nox;
+      emacs = emacsPackages.emacsWithPackages (packages: [
+        (packages.elisp-autofmt.overrideAttrs (previous: {
+          # The mirror carries the same pinned revision and source hash.
+          src = pkgs.fetchFromGitHub {
+            owner = "emacsmirror";
+            repo = "elisp-autofmt";
+            rev = "b1cdd8661930a35b1633ccc28b27b793145cd108";
+            sha256 = previous.src.outputHash;
+          };
+        }))
+        packages.package-lint
+      ]);
+      # package-lint initializes package.el even with -Q; keep personal packages out.
+      emacsBatch = pkgs.writeShellScriptBin "renode-emacs-batch" ''
+        exec ${lib.getExe emacs} --batch -Q \
+          --init-directory "$RENODE_SYNTAX_ROOT/.tmp/emacs/config" "$@"
+      '';
+      pythonGrammar = pkgs.tree-sitter-grammars.tree-sitter-python;
       wasiCompiler = pkgs.pkgsCross.wasi32.stdenv.cc;
       wasiSdk = pkgs.writeShellScriptBin "clang" ''
         # Tree-sitter supplies scanner libc imports in its WASM runtime. The Nix
@@ -65,9 +84,10 @@ let
           exclude = [
             # A linked worktree has a .git pointer file rather than a directory.
             ".git"
-            "sublime/**"
+            "integrations/sublime/**"
             # These are reproduced by the parser generator, including its scanner copy.
             "tree-sitter/*/src/**"
+            "integrations/emacs/renode-ts-data.el"
           ];
           rust = {
             exe = lib.getExe pkgs.rustfmt;
@@ -90,6 +110,16 @@ let
               "*.h"
             ];
           };
+          extraFormatters.elisp = {
+            command = lib.getExe emacsBatch;
+            cacheInputs = [ ../emacs/format.el ];
+            options = [
+              "--load"
+              "${../emacs/format.el}"
+              "${pythonTools}/bin/python"
+            ];
+            includes = [ "*.el" ];
+          };
           python.configFile = ../../pyproject.toml;
           shell.includes = [
             "*.sh"
@@ -109,6 +139,17 @@ let
 
         lint = {
           javascript = true;
+          extraCheckers.package-lint = {
+            command = lib.getExe emacsBatch;
+            options = [
+              "--load"
+              "package-lint"
+              "--funcall"
+              "package-lint-batch-and-exit"
+            ];
+            includes = [ "renode-ts-mode.el" ];
+            batch = true;
+          };
           python.configFile = ../../pyproject.toml;
           basedpyright.projects.tooling = {
             configFile = "pyproject.toml";
@@ -129,6 +170,7 @@ let
             "*.txt"
             "*.repl"
             "*.resc"
+            "*.el"
             "*.c"
             "*.h"
           ];
@@ -143,6 +185,9 @@ let
           pythonTools
           nodejs
           wasiSdk
+          emacs
+          emacsBatch
+          pythonGrammar
           ;
       };
     in
@@ -164,6 +209,8 @@ let
           ++ lib.attrValues commands
           ++ [
             basedpyright
+            emacs
+            emacsBatch
             nodejs
             pkgs.bash
             pkgs.cargo

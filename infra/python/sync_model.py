@@ -48,9 +48,10 @@ def products(root: Path) -> dict[str, bytes]:
     paths = [root / 'infra/renode-pins.json']
     for directory in ('generated', *(f'tree-sitter/{name}/src' for name in GRAMMARS)):
         paths.extend(path for path in (root / directory).rglob('*') if path.is_file())
-    paths.extend((root / 'sublime').glob('*.sublime-syntax'))
-    paths.extend((root / 'zed/languages').rglob('highlights.scm'))
-    paths.extend((root / 'zed/languages').rglob('brackets.scm'))
+    paths.extend((root / 'integrations/sublime').glob('*.sublime-syntax'))
+    paths.extend((root / 'integrations/zed/languages').rglob('highlights.scm'))
+    paths.extend((root / 'integrations/zed/languages').rglob('brackets.scm'))
+    paths.extend((root / 'integrations/emacs').glob('renode-ts-data.el'))
     return {path.relative_to(root).as_posix(): path.read_bytes() for path in sorted(paths)}
 
 

@@ -127,6 +127,7 @@ def run(root: Path, console: Console) -> int:
                 'uv',
                 'nix',
                 'tree-sitter',
+                'emacs',
             )
         ),
         Tool('python', 'uv2nix environment'),

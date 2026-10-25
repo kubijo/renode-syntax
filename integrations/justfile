@@ -1,0 +1,7 @@
+import '../infra/just/prelude.just'
+
+# Zed development extension.
+mod zed
+
+# Emacs native grammars.
+mod emacs

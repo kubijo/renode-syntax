@@ -1,4 +1,4 @@
-import 'prelude.just'
+import '../../infra/just/prelude.just'
 
 # Prepare the working parser and WASM as a local Zed dev extension under .tmp.
 prepare:

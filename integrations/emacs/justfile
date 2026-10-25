@@ -1,0 +1,9 @@
+import '../../infra/just/prelude.just'
+
+# Build native grammars and a loader for your Emacs instance.
+prepare:
+    @renode-emacs-prepare
+
+# Open the prepared fixture in pinned terminal Emacs or the supplied Emacs executable.
+review editor="":
+    @renode-emacs-review {{ quote(editor) }}

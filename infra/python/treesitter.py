@@ -92,7 +92,7 @@ def problems(node: Node) -> tuple[Node, ...]:
 
 def monitor_ranges(root: Path, grammar: Grammar, tree: Tree) -> tuple[tuple[Node, ...], ...]:
     """Use Zed's injection.host grouping, with one content range per query match."""
-    query = Query(grammar.language, (root / 'zed/languages/repl/injections.scm').read_text())
+    query = Query(grammar.language, (root / 'integrations/zed/languages/repl/injections.scm').read_text())
     groups: dict[tuple[int, int], dict[tuple[int, int], Node]] = {}
     for pattern, captures in QueryCursor(query).matches(tree.root_node):
         if query.pattern_settings(pattern).get('injection.language') != 'Renode Script':
@@ -152,7 +152,7 @@ def corpus(root: Path, grammar: Grammar, console: Console, name: GrammarName = '
 
 
 def queries(root: Path, grammar: Grammar, name: GrammarName = 'resc') -> None:
-    for path in sorted((root / 'zed/languages' / name).glob('*.scm')):
+    for path in sorted((root / 'integrations/zed/languages' / name).glob('*.scm')):
         _ = Query(grammar.language, path.read_text())
 
 

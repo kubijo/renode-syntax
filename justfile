@@ -9,8 +9,8 @@ mod test 'infra/just/test.just'
 # Pinned Renode inputs and generated syntax data.
 mod source 'infra/just/source.just'
 
-# Prepare the local extension for the Zed review gate.
-mod zed 'infra/just/zed.just'
+# Prepare and review application integrations.
+mod integrations
 
 # Weekly upstream update proposals and local rehearsals.
 mod sync 'infra/just/sync.just'

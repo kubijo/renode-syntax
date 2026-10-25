@@ -12,6 +12,10 @@ tooling:
 runner:
     @renode-test-runner
 
+# Compile and test Emacs modes, highlighting and embedded-language ranges.
+emacs:
+    @renode-test-emacs
+
 # Check the complete pinned Renode corpus for leaked Sublime scopes (offline).
 corpus:
     @renode-test-corpus

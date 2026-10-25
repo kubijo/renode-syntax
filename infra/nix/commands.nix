@@ -4,6 +4,9 @@
   pythonTools,
   nodejs,
   wasiSdk,
+  emacs,
+  emacsBatch,
+  pythonGrammar,
 }:
 let
   inherit (builtins) toJSON;
@@ -16,6 +19,7 @@ let
   format = step "format" [ project.apps.format.program ];
   lint = [
     (step "lint" [ project.apps.lint.program ])
+    emacsCompile
     (step "clippy" [
       cargo
       "clippy"
@@ -39,7 +43,7 @@ let
     "--manifest-path"
     "infra/syntax-test/Cargo.toml"
     "--"
-    "sublime"
+    "integrations/sublime"
   ];
   runnerTests = step "runner-tests" [
     cargo
@@ -48,12 +52,13 @@ let
     "--manifest-path"
     "infra/syntax-test/Cargo.toml"
   ];
+  corpusPrepare = step "corpus-prepare" [
+    python
+    "infra/python/corpus.py"
+    "prepare"
+  ];
   corpus = [
-    (step "corpus-prepare" [
-      python
-      "infra/python/corpus.py"
-      "prepare"
-    ])
+    corpusPrepare
     (step "corpus" [
       cargo
       "run"
@@ -64,7 +69,7 @@ let
       "infra/syntax-test/Cargo.toml"
       "--"
       "--corpus"
-      "sublime"
+      "integrations/sublime"
       ".tmp/corpus/files0"
     ])
   ];
@@ -114,6 +119,28 @@ let
     "infra/javascript/check-wasm.mjs"
     ".tmp/zed/extension/grammars"
   ];
+  emacsPrepare = step "emacs-prepare" [
+    python
+    "infra/python/emacs_support.py"
+    "--python-grammar"
+    "${pythonGrammar}/parser"
+    "--suffix"
+    pkgs.stdenv.hostPlatform.extensions.sharedLibrary
+  ];
+  emacsCompile = step "emacs-compile" [
+    (lib.getExe emacsBatch)
+    "--load"
+    "infra/emacs/compile.el"
+  ];
+  emacsTest = step "emacs-test" [
+    (lib.getExe emacsBatch)
+    "--load"
+    ".tmp/emacs/setup.el"
+    "--load"
+    "infra/emacs/test.el"
+    "--funcall"
+    "ert-run-tests-batch-and-exit"
+  ];
   plans = {
     format = [ (format // { forward_arguments = true; }) ];
     inherit lint;
@@ -136,6 +163,15 @@ let
       (parser "corpus")
       zed
       wasmCheck
+      emacsPrepare
+      emacsTest
+    ];
+    emacs-prepare = [ emacsPrepare ];
+    test-emacs = [
+      corpusPrepare
+      emacsCompile
+      emacsPrepare
+      emacsTest
     ];
     source-parser = [ ((parser "generate") // { forward_arguments = true; }) ];
     source-parser-tests = [ ((parser "update-tests") // { forward_arguments = true; }) ];
@@ -239,4 +275,14 @@ commands
 }
 // {
   doctor = command "doctor" "doctor";
+  emacs-review = pkgs.writeShellApplication {
+    name = "renode-emacs-review";
+    text = ''
+      cd "$RENODE_SYNTAX_ROOT"
+      ${lib.getExe commands.emacs-prepare}
+      exec "''${1:-${lib.getExe emacs}}" \
+        --load "$RENODE_SYNTAX_ROOT/.tmp/emacs/setup.el" \
+        "$RENODE_SYNTAX_ROOT/.tmp/emacs/review.repl"
+    '';
+  };
 }

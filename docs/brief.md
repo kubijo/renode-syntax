@@ -1,8 +1,8 @@
 # Renode syntax: requirements and decisions
 
-Syntax support for Renode platform descriptions (`.repl`) and monitor scripts (`.resc`) in Sublime Text/Merge, bat and
-Zed. Mechanical facts are derived from Renode's own sources; structure is written once and guarded by tests and a weekly
-upstream sync. [Agent workflow](../.ai/instructions.md).
+Syntax support for Renode platform descriptions (`.repl`) and monitor scripts (`.resc`) in Sublime Text/Merge, bat, Zed
+and Emacs. Mechanical facts come from Renode's sources; tests and a weekly upstream sync guard the grammars.
+[Agent workflow](../.ai/instructions.md).
 
 ## Established facts (do not re-research; verify only where marked)
 
@@ -83,21 +83,22 @@ This repository uses MIT. Renode-derived material retains its applicable upstrea
 
 ### Layout
 
-| Path                | Owns                                                                           |
-| ------------------- | ------------------------------------------------------------------------------ |
-| `sublime/`          | `.sublime-syntax` files and their `syntax_test_*` files, nothing else          |
-| `tree-sitter/repl/` | Platform grammar: `grammar.js`, external scanner, committed generated `src/`   |
-| `tree-sitter/resc/` | Monitor grammar: `grammar.js`, committed generated `src/`                      |
-| `zed/`              | Zed extension: `extension.toml`, `languages/`, queries                         |
-| `generated/`        | Derived Renode data consumed by both grammar families                          |
-| `infra/`            | Tool configs that can move, the generator, the syntect runner, CI scripts, Nix |
-| `.tmp/`             | Every temporary artifact: Renode checkouts, build targets, caches, dumps       |
-| `docs/`, `.ai/`     | This brief, decisions, agent instructions                                      |
+| Path                    | Owns                                                                           |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `integrations/sublime/` | Sublime grammars and `syntax_test_*` assertions                                |
+| `tree-sitter/repl/`     | Platform grammar: `grammar.js`, external scanner, committed generated `src/`   |
+| `tree-sitter/resc/`     | Monitor grammar: `grammar.js`, committed generated `src/`                      |
+| `integrations/zed/`     | Zed extension: `extension.toml`, `languages/`, queries                         |
+| `integrations/emacs/`   | Emacs modes and generated lexical facts                                        |
+| `generated/`            | Derived Renode data consumed by both grammar families                          |
+| `infra/`                | Tool configs that can move, the generator, the syntect runner, CI scripts, Nix |
+| `.tmp/`                 | Every temporary artifact: Renode checkouts, build targets, caches, dumps       |
+| `docs/`, `.ai/`         | This brief, decisions, agent instructions                                      |
 
 Root keeps only what tools discover natively: `.envrc`, `flake.nix`, `flake.lock`, `justfile`, `pyproject.toml`,
 `uv.lock`, `tree-sitter.json`, `LICENSE`, notices, `.gitignore`, agent entry symlinks. Because whole-repository clones
-land in Sublime and bat, no `.sublime-syntax`, `.tmPreferences` or `.sublime-settings` may exist outside `sublime/`, and
-build output is never committed.
+land in Sublime and bat, no `.sublime-syntax`, `.tmPreferences` or `.sublime-settings` may exist outside
+`integrations/sublime/`, and build output is never committed.
 
 ### Derivation
 
@@ -134,11 +135,17 @@ embedded-language contexts have ended. It detects context leaks rather than vali
   excluded from monitor injection ranges, and the corpus gate parses those same ranges with `resc`.
 - Zed: one extension covering both languages, installed as a dev extension first. Registry publication is a later,
   separate decision.
+- Emacs: native Tree-sitter modes for both languages, requiring Emacs 30.1+ and grammar ABI 15. Embedded parsers are
+  independent and preserve platform comment exclusions. Derive lexical facts from the shared extraction; reuse the
+  installed Python mode's highlighting when its optional grammar is available. Use Emacs's standard grammar installer;
+  automatic indentation is deferred. Nix defines native preparation, elisp-autofmt, package-lint, strict byte
+  compilation and ERT. See [installation and review](emacs.md).
 
 ### Quality gates
 
 - Sublime syntax tests through the syntect runner.
 - Tree-sitter corpus tests per grammar.
+- Native Emacs tests for highlighting, independent embedded ranges, edits, comments and navigation.
 - Renode corpus at the pinned commits: zero `ERROR`/`MISSING` nodes for Tree-sitter, zero sentinel leaks for Sublime.
 - A fix lands with a test that fails without it.
 - nix-tools formatting and lint over every tracked file.
@@ -169,7 +176,8 @@ writes; actual hosted-runner caching and publication require a workflow run to v
   formatters for Rust, JavaScript and maintained C sources are declared there. Parser `src/` products retain the
   generator's output format.
 - Nix owns command definitions and dependencies. `just` exposes maintainer entry points through thin modules that import
-  `infra/just/prelude.just`; commands assume the Nix shell is already active.
+  `infra/just/prelude.just`. Module justfiles live in their context directories where applicable; application modules
+  are nested under `just integrations`. Commands assume the Nix shell is already active.
 - direnv loads the full locked development shell, with its layout and caches under `.tmp/`.
 - Python support tooling lives under `infra/python/`: Python 3.15, uv-managed dependencies, and a uv2nix environment
   built from the root `pyproject.toml` and `uv.lock`. Editors discover the same immutable environment through
@@ -188,9 +196,11 @@ writes; actual hosted-runner caching and publication require a workflow run to v
 3. Tree-sitter `resc`, Zed extension with `resc`, corpus parse. Gate: zero parse errors; user reviews it in Zed.
 4. Weekly workflow and structural-change issues. Gate: a dry run against an older pin produces the expected PR content.
 5. Tree-sitter `repl` with the indentation scanner; `repl` in Zed. Gate: zero parse errors on the corpus.
-6. `sublime-merge-plugins` switches to this repository as a submodule. Its commits are the user's.
-
-Phases 0–4 are the first working session; phase 5 is separate.
+6. Group application products under `integrations/`; preserve shared grammars and generated data at the root. Gate:
+   product contents unchanged and all quality checks pass.
+7. Emacs modes with native grammar preparation and embedded languages. Gate: byte compilation and native ERT pass,
+   followed by user review in Emacs.
+8. `sublime-merge-plugins` switches to this repository as a submodule. Its commits are the user's.
 
 ## Open choices
 

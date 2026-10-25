@@ -48,7 +48,7 @@ class GrammarTests(unittest.TestCase):
 
     def captures(self, query: str, source: str) -> dict[str, list[str]]:
         tree = self.parse(source)
-        compiled = Query(self.grammar.language, (ROOT / 'zed/languages/resc' / query).read_text())
+        compiled = Query(self.grammar.language, (ROOT / 'integrations/zed/languages/resc' / query).read_text())
         return {
             name: [text(node) for node in sorted(nodes, key=lambda node: node.start_byte)]
             for name, nodes in QueryCursor(compiled).captures(tree.root_node).items()
@@ -81,7 +81,7 @@ class GrammarTests(unittest.TestCase):
         source = 'python """\nprint("hello")\n"""\nset script\n"""\nprint("opaque")\n"""\n'
         captures = self.captures('injections.scm', source)
         self.assertEqual(captures['injection.content'], ['\nprint("hello")\n'])
-        query = Query(self.grammar.language, (ROOT / 'zed/languages/resc/injections.scm').read_text())
+        query = Query(self.grammar.language, (ROOT / 'integrations/zed/languages/resc/injections.scm').read_text())
         self.assertEqual(query.pattern_settings(0)['injection.language'], 'python')
 
     def test_paths_named_arguments_comments_and_crlf(self) -> None:
