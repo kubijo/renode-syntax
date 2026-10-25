@@ -96,9 +96,9 @@ This repository uses MIT. Renode-derived material retains its applicable upstrea
 | `docs/`, `.ai/`         | This brief, decisions, agent instructions                                      |
 
 Root keeps only what tools discover natively: `.envrc`, `flake.nix`, `flake.lock`, `justfile`, `pyproject.toml`,
-`uv.lock`, `tree-sitter.json`, `LICENSE`, notices, `.gitignore`, agent entry symlinks. Because whole-repository clones
-land in Sublime and bat, no `.sublime-syntax`, `.tmPreferences` or `.sublime-settings` may exist outside
-`integrations/sublime/`, and build output is never committed.
+`uv.lock`, `tree-sitter.json`, `.elpaignore`, `LICENSE`, notices, `.gitignore`, agent entry symlinks. Because
+whole-repository clones land in Sublime and bat, no `.sublime-syntax`, `.tmPreferences` or `.sublime-settings` may exist
+outside `integrations/sublime/`, and build output is never committed.
 
 ### Derivation
 
@@ -139,7 +139,8 @@ embedded-language contexts have ended. It detects context leaks rather than vali
   independent and preserve platform comment exclusions. Derive lexical facts from the shared extraction; reuse the
   installed Python mode's highlighting when its optional grammar is available. Use Emacs's standard grammar installer;
   automatic indentation is deferred. Nix defines native preparation, elisp-autofmt, package-lint, strict byte
-  compilation and ERT. See [installation and review](emacs.md).
+  compilation and ERT. Install directly from Git with `package-vc-install`; see
+  [installation](../integrations/emacs/readme.md) and [review](emacs.md).
 
 ### Quality gates
 
