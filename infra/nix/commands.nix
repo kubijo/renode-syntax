@@ -112,7 +112,7 @@ let
   wasmCheck = step "zed-wasm" [
     (lib.getExe nodejs)
     "infra/javascript/check-wasm.mjs"
-    ".tmp/zed/extension/grammars/resc.wasm"
+    ".tmp/zed/extension/grammars"
   ];
   plans = {
     format = [ (format // { forward_arguments = true; }) ];
@@ -137,10 +137,10 @@ let
       zed
       wasmCheck
     ];
-    source-parser = [ (parser "generate") ];
-    source-parser-tests = [ (parser "update-tests") ];
-    test-parser = [ (parser "test") ];
-    test-parser-corpus = [ (parser "corpus") ];
+    source-parser = [ ((parser "generate") // { forward_arguments = true; }) ];
+    source-parser-tests = [ ((parser "update-tests") // { forward_arguments = true; }) ];
+    test-parser = [ ((parser "test") // { forward_arguments = true; }) ];
+    test-parser-corpus = [ ((parser "corpus") // { forward_arguments = true; }) ];
     zed-prepare = [
       zed
       wasmCheck
@@ -153,6 +153,7 @@ let
         "--user-data-dir"
         ".tmp/zed/data"
         "."
+        ".tmp/zed/review.repl"
       ])
     ];
     test-syntax = [ syntax ];

@@ -1,0 +1,33 @@
+; Structure is maintained here; mechanical spellings are appended by the generator.
+(comment) @comment
+(identifier) @variable
+(type_name) @type
+(entry name: (identifier) @label)
+(property name: (identifier) @property)
+(monitor_keyword) @keyword
+(monitor_modifier) @keyword
+(boolean) @boolean
+[(none) (empty)] @constant.builtin
+[(number) (unsigned)] @number
+[(string) (multiline_string)] @string
+(enum) @enum
+[(block_start) (block_end)] @punctuation.bracket
+
+[
+  "using"
+  "new"
+  "as"
+  "local"
+] @keyword
+
+[
+  ":"
+  ","
+  "."
+  "@"
+  "#"
+  "->"
+  "|"
+  "-"
+  "+"
+] @punctuation.delimiter

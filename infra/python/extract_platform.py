@@ -8,8 +8,9 @@ from tree_sitter import Node
 
 
 class Platform:
-    def __init__(self, document: Document) -> None:
+    def __init__(self, document: Document, *, unicode: bool = False) -> None:
         self.document = document
+        self.unicode = unicode
         declarations = [
             node for node in walk(document.root, 'class_declaration') if text(field(node, 'name')) == 'Grammar'
         ]
@@ -51,6 +52,8 @@ class Platform:
             # Preserve the migrated highlighter's ASCII identifier policy. This is a lexical
             # approximation; the full Sprache predicates and parser semantics are not transpiled.
             primitives = {'Letter': '[A-Za-z]', 'LetterOrDigit': '[A-Za-z0-9]', 'Number': r'\d+'}
+            if self.unicode:
+                primitives = {'Letter': r'\p{L}', 'LetterOrDigit': r'[\p{L}\p{Nd}]', 'Number': r'\p{Nd}+'}
             name = text(field(node, 'name'))
             if name not in primitives:
                 raise SourceError(f'Unsupported Sprache primitive: {text(node)}')

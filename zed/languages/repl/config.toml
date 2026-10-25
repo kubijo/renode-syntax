@@ -1,0 +1,6 @@
+name = "Renode Platform"
+grammar = "repl"
+path_suffixes = ["repl"]
+line_comments = ["// "]
+tab_size = 4
+hard_tabs = false

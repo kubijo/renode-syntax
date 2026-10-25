@@ -30,8 +30,11 @@ let
       nodejs = pkgs.nodejs_26;
       wasiCompiler = pkgs.pkgsCross.wasi32.stdenv.cc;
       wasiSdk = pkgs.writeShellScriptBin "clang" ''
+        # Tree-sitter supplies scanner libc imports in its WASM runtime. The Nix
+        # cross libc is static and cannot be linked into Zed's shared modules.
         exec ${wasiCompiler}/bin/${wasiCompiler.targetPrefix}cc \
-          -fuse-ld=${pkgs.llvmPackages.lld}/bin/wasm-ld "$@"
+          -fuse-ld=${pkgs.llvmPackages.lld}/bin/wasm-ld \
+          -nostdlib -Wl,--no-entry -Wl,--allow-undefined "$@"
       '';
       basedpyright = toolPkgs.basedpyright.override {
         buildNpmPackage = toolPkgs.buildNpmPackage.override { inherit nodejs; };
@@ -63,6 +66,8 @@ let
             # A linked worktree has a .git pointer file rather than a directory.
             ".git"
             "sublime/**"
+            # These are reproduced by the parser generator, including its scanner copy.
+            "tree-sitter/*/src/**"
           ];
           rust = {
             exe = lib.getExe pkgs.rustfmt;
@@ -72,6 +77,19 @@ let
             ];
           };
           javascript = true;
+          extraFormatters.c = {
+            # Formatting needs no compiler header wrapper or ambient PATH utilities.
+            command = lib.getExe' pkgs.clang-tools "clang-format-unwrapped";
+            options = [
+              "-i"
+              "--style=file:${../clang-format.yaml}"
+            ];
+            cacheInputs = [ ../clang-format.yaml ];
+            includes = [
+              "*.c"
+              "*.h"
+            ];
+          };
           python.configFile = ../../pyproject.toml;
           shell.includes = [
             "*.sh"
@@ -84,8 +102,8 @@ let
             "*.in"
             "*.scm"
             "*.txt"
-            "*.c"
-            "*.h"
+            "*.repl"
+            "*.resc"
           ];
         };
 
@@ -109,6 +127,8 @@ let
             "*.in"
             "*.scm"
             "*.txt"
+            "*.repl"
+            "*.resc"
             "*.c"
             "*.h"
           ];

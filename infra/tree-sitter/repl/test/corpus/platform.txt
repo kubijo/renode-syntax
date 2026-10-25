@@ -1,0 +1,297 @@
+==================
+Imports, entries, registrations and aliases
+==================
+using "base.repl";
+local uart: UART.Example @ { sysbus <0x1000, +0x100>; bus 0x2000 } as "serial"
+    enabled: True
+    frequency: 100
+emptyEntry:
+
+---
+
+(source_file
+  (using
+    (string
+      (string_content)
+      (string_end)))
+  (entry
+    (identifier)
+    (type_name
+      (identifier)
+      (identifier))
+    (registration
+      (block_start)
+      (registration_item
+        (reference
+          (identifier))
+        (range
+          (unsigned)
+          (unsigned)))
+      (registration_item
+        (reference
+          (identifier))
+        (number))
+      (block_end))
+    (alias
+      (string
+        (string_content)
+        (string_end)))
+    (attributes
+      (block_start)
+      (property
+        (identifier)
+        (boolean))
+      (property
+        (identifier)
+        (number))
+      (block_end)))
+  (entry
+    (identifier)))
+
+==================
+Explicit blocks, dictionaries, lists and inline objects
+==================
+device: Example.Device @ none {
+    peer: new Example.Peer { enabled: false };
+    values: [empty, 1, .Mode, Kind.Mode,];
+    options: { "clock": 100; 2: new Clock { frequency: 1 } };
+    target: none
+}
+
+---
+
+(source_file
+  (entry
+    (identifier)
+    (type_name
+      (identifier)
+      (identifier))
+    (registration)
+    (attributes
+      (block_start)
+      (property
+        (identifier)
+        (object
+          (type_name
+            (identifier)
+            (identifier))
+          (attributes
+            (block_start)
+            (property
+              (identifier)
+              (boolean))
+            (block_end))))
+      (property
+        (identifier)
+        (list
+          (empty)
+          (number)
+          (enum
+            (identifier))
+          (enum
+            (identifier)
+            (identifier))))
+      (property
+        (identifier)
+        (dictionary
+          (block_start)
+          (pair
+            (string
+              (string_content)
+              (string_end))
+            (number))
+          (pair
+            (number)
+            (object
+              (type_name
+                (identifier))
+              (attributes
+                (block_start)
+                (property
+                  (identifier)
+                  (number))
+                (block_end))))
+          (block_end)))
+      (property
+        (identifier)
+        (none))
+      (block_end))))
+
+==================
+IRQ ranges, source lists, receiver indexes and multiplexing
+==================
+uart:
+    [Tx, 1-3] -> cpu#0@[1, 2-4] | gic@8
+    -> cpu@1
+    4 -> none
+
+---
+
+(source_file
+  (entry
+    (identifier)
+    (attributes
+      (block_start)
+      (irq
+        (irq_sources
+          (identifier)
+          (irq_range
+            (unsigned)
+            (unsigned)))
+        (irq_destination
+          (identifier)
+          (unsigned)
+          (unsigned)
+          (irq_range
+            (unsigned)
+            (unsigned)))
+        (irq_destination
+          (identifier)
+          (unsigned)))
+      (irq
+        (irq_destination
+          (identifier)
+          (unsigned)))
+      (irq
+        (unsigned)
+        (none))
+      (block_end))))
+
+==================
+Unicode identifiers, decimal numbers and nested EOF dedents
+==================
+resetting: Example.Νέα
+    λ_2: new Thing
+        count: ١٢٣
+
+---
+
+(source_file
+  (entry
+    (identifier)
+    (type_name
+      (identifier)
+      (identifier))
+    (attributes
+      (block_start)
+      (property
+        (identifier)
+        (object
+          (type_name
+            (identifier))
+          (attributes
+            (block_start)
+            (property
+              (identifier)
+              (number))
+            (block_end))))
+      (block_end))))
+
+==================
+Monitor fragments and platform comments
+==================
+sysbus:
+    preinit add:
+        echo "https://host/{safe}" // annotation
+        // Between commands.
+        /* Parent syntax. */
+        Tag <0x100 4> "register"
+    reset:
+        echo "reset"
+next:
+
+---
+
+(source_file
+  (entry
+    (identifier)
+    (attributes
+      (block_start)
+      (monitor
+        (monitor_keyword)
+        (monitor_modifier)
+        (block_start)
+        (monitor_body
+          (monitor_text)
+          (comment)
+          (monitor_text)
+          (comment)
+          (monitor_text)
+          (comment)
+          (monitor_text))
+        (block_end))
+      (monitor
+        (monitor_keyword)
+        (block_start)
+        (monitor_body
+          (monitor_text))
+        (block_end))
+      (block_end)))
+  (entry
+    (identifier)))
+
+==================
+Explicit monitor and quoted braces
+==================
+sysbus: { init: { echo "{ literal }"; echo "two" }; enabled: true }
+next:
+
+---
+
+(source_file
+  (entry
+    (identifier)
+    (attributes
+      (block_start)
+      (monitor
+        (monitor_keyword)
+        (block_start)
+        (monitor_body
+          (monitor_text))
+        (block_end))
+      (property
+        (identifier)
+        (boolean))
+      (block_end)))
+  (entry
+    (identifier)))
+
+==================
+Python and opaque multiline strings
+==================
+python: Python.PythonPeripheral @ sysbus 0x1000
+    script: '''
+def on_read(request):
+    return {"value": 42}  # Python
+'''
+    other: '''// Not a platform comment. { }'''
+next:
+
+---
+
+(source_file
+  (entry
+    (identifier)
+    (type_name
+      (identifier)
+      (identifier))
+    (registration
+      (registration_item
+        (reference
+          (identifier))
+        (number)))
+    (attributes
+      (block_start)
+      (property
+        (identifier)
+        (multiline_string
+          (multiline_content)
+          (multiline_end)))
+      (property
+        (identifier)
+        (multiline_string
+          (multiline_content)
+          (multiline_end)))
+      (block_end)))
+  (entry
+    (identifier)))

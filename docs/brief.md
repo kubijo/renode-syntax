@@ -40,20 +40,16 @@ upstream sync. [Agent workflow](../.ai/instructions.md).
   `Tokenizer.cs`, and `Monitor.cs` headers declare MIT. The latter two also credit Realtime Embedded. Retain the
   applicable copyright notices and full MIT text in `NOTICE`; verify additional extraction sources at the pins.
 
-### Existing implementation (to migrate)
+### Sublime compatibility
 
-`kubijo/sublime-merge-plugins` at `8e2b145` holds the current work:
+The Sublime grammars and syntect runner originated in `kubijo/sublime-merge-plugins` at `8e2b145`:
 
 - `Renode/RenodePlatform.sublime-syntax` (`source.renode.repl`) and `Renode/RenodeScript.sublime-syntax`
   (`source.renode.resc`). Platform `init:`/`reset:`/`preinit:` bodies include `scope:source.renode.resc#statements`; the
   indent-mode block pops on a backreference to the keyword's indentation. `python """…"""` and `script: '''…'''` embed
   `source.python`.
-- `Renode/syntax_test_renode.{repl,resc}`: 540 Sublime-format assertions.
-- `tools/syntax-test/`: Rust runner over syntect (bat's engine). It resolves the header grammar by file name and accepts
-  indented assertion lines. There it builds into `~/.cache` to keep cargo output out of Sublime's package scan; here its
-  target directory moves to `.tmp/`.
-- Corpus result: all 259 `.repl` and 145 `.resc` files in `renode/renode` parse with no string/comment/embed leaks,
-  checked by appending a sentinel entry to each file.
+- `syntax_test_renode.{repl,resc}` uses Sublime-format assertions. The Rust runner resolves the header grammar by file
+  name, accepts indented assertion lines and builds under `.tmp/` to keep output out of Sublime's package scan.
 - **Unverified**: loading in Sublime Merge itself. Its engine may differ from syntect on cross-syntax `scope:…#context`
   includes and backreferences in `pop`.
 
@@ -133,6 +129,9 @@ embedded-language contexts have ended. It detects context leaks rather than vali
   Python injection.
 - Tree-sitter `repl`: follows `Grammar.cs`; an external scanner ports `PreLexer.cs` indentation and comment rules.
   Inject `resc` into `init`/`reset`/`preinit` bodies and Python into `script: '''…'''`.
+- Platform lexer facts and scanner constants come from `generated/repl.json`. The maintained scanner lives beside
+  `grammar.js`; parser generation copies it and emits its configuration header under `src/`. Platform comments are
+  excluded from monitor injection ranges, and the corpus gate parses those same ranges with `resc`.
 - Zed: one extension covering both languages, installed as a dev extension first. Registry publication is a later,
   separate decision.
 
@@ -167,7 +166,8 @@ writes; actual hosted-runner caching and publication require a workflow run to v
 
 - Nix flake with `kubijo/nix-tools` pinned to a release tag (`v0.10.0` in sibling repositories), following its packaging
   inputs. The root flake hands off to `infra/nix/flake.nix`. nix-tools supplies `repofmt`, `repochk` and checks; extra
-  formatters for Rust and JavaScript are declared there.
+  formatters for Rust, JavaScript and maintained C sources are declared there. Parser `src/` products retain the
+  generator's output format.
 - Nix owns command definitions and dependencies. `just` exposes maintainer entry points through thin modules that import
   `infra/just/prelude.just`; commands assume the Nix shell is already active.
 - direnv loads the full locked development shell, with its layout and caches under `.tmp/`.

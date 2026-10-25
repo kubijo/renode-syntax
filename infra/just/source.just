@@ -12,10 +12,10 @@ generate:
 check:
     renode-source-check
 
-# Generate the committed Tree-sitter monitor parser from grammar.js.
-parser:
-    renode-source-parser
+# Generate committed parsers from grammar.js and the maintained scanner.
+parser grammar="all":
+    renode-source-parser --grammar {{ grammar }}
 
 # Update expected Tree-sitter fixture trees for review.
-parser-tests:
-    renode-source-parser-tests
+parser-tests grammar="all":
+    renode-source-parser-tests --grammar {{ grammar }}

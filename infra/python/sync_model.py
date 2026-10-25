@@ -6,6 +6,7 @@ from typing import Literal
 
 import msgspec
 from renode_model import Pins, RenodeData
+from treesitter import GRAMMARS
 
 BRANCH = 'automation/renode-sync'
 STRUCTURAL = (
@@ -45,10 +46,11 @@ class Replay(msgspec.Struct, frozen=True, forbid_unknown_fields=True):
 
 def products(root: Path) -> dict[str, bytes]:
     paths = [root / 'infra/renode-pins.json']
-    for directory in ('generated', 'tree-sitter/resc/src'):
+    for directory in ('generated', *(f'tree-sitter/{name}/src' for name in GRAMMARS)):
         paths.extend(path for path in (root / directory).rglob('*') if path.is_file())
     paths.extend((root / 'sublime').glob('*.sublime-syntax'))
     paths.extend((root / 'zed/languages').rglob('highlights.scm'))
+    paths.extend((root / 'zed/languages').rglob('brackets.scm'))
     return {path.relative_to(root).as_posix(): path.read_bytes() for path in sorted(paths)}
 
 

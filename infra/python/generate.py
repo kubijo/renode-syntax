@@ -8,6 +8,7 @@ from typing import Literal
 
 import csharp_source
 import msgspec
+import render_repl
 import render_treesitter
 import tyro
 import upstream
@@ -53,6 +54,7 @@ def products(root: Path) -> dict[str, bytes]:
     result = {'generated/renode.json': msgspec.json.format(msgspec.json.encode(data), indent=2) + b'\n'}
     result.update(grammars(root, data))
     result.update(render_treesitter.products(root, data))
+    result.update(render_repl.products(root, data))
     return result
 
 

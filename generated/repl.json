@@ -1,0 +1,485 @@
+{
+  "keywords": {
+    "UsingKeyword": {
+      "name": "using",
+      "symbol": "UsingKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 108
+      }
+    },
+    "NewKeyword": {
+      "name": "new",
+      "symbol": "NewKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 110
+      }
+    },
+    "AsKeyword": {
+      "name": "as",
+      "symbol": "AsKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 112
+      }
+    },
+    "PreinitKeyword": {
+      "name": "preinit",
+      "symbol": "PreinitKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 114
+      }
+    },
+    "InitKeyword": {
+      "name": "init",
+      "symbol": "InitKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 116
+      }
+    },
+    "ResetKeyword": {
+      "name": "reset",
+      "symbol": "ResetKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 118
+      }
+    },
+    "LocalKeyword": {
+      "name": "local",
+      "symbol": "LocalKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 120
+      }
+    },
+    "TrueKeyword": {
+      "name": "true",
+      "symbol": "TrueKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 122
+      }
+    },
+    "TrueKeywordTitleCase": {
+      "name": "True",
+      "symbol": "TrueKeywordTitleCase",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 123
+      }
+    },
+    "FalseKeyword": {
+      "name": "false",
+      "symbol": "FalseKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 125
+      }
+    },
+    "FalseKeywordTitleCase": {
+      "name": "False",
+      "symbol": "FalseKeywordTitleCase",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 126
+      }
+    },
+    "NoneKeyword": {
+      "name": "none",
+      "symbol": "NoneKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 128
+      }
+    },
+    "EmptyKeyword": {
+      "name": "empty",
+      "symbol": "EmptyKeyword",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 130
+      }
+    }
+  },
+  "symbols": {
+    "Separator": {
+      "value": ";",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 25
+      }
+    },
+    "AtSign": {
+      "value": "@",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 27
+      }
+    },
+    "MultiplexSign": {
+      "value": "|",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 29
+      }
+    },
+    "Colon": {
+      "value": ":",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 31
+      }
+    },
+    "Comma": {
+      "value": ",",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 33
+      }
+    },
+    "PlusSign": {
+      "value": "+",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 35
+      }
+    },
+    "OpeningChevron": {
+      "value": "<",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 37
+      }
+    },
+    "ClosingChevron": {
+      "value": ">",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 39
+      }
+    },
+    "OpeningBrace": {
+      "value": "{",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 41
+      }
+    },
+    "ClosingBrace": {
+      "value": "}",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 43
+      }
+    },
+    "OpeningSquareBracket": {
+      "value": "[",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 45
+      }
+    },
+    "ClosingSquareBracket": {
+      "value": "]",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 47
+      }
+    },
+    "Minus": {
+      "value": "-",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 49
+      }
+    },
+    "Dot": {
+      "value": ".",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 136
+      }
+    },
+    "Hash": {
+      "value": "#",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 382
+      }
+    },
+    "RightArrow": {
+      "value": "->",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 60
+      }
+    },
+    "EscapeCharacter": {
+      "value": "\\",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 56
+      }
+    }
+  },
+  "rules": {
+    "GeneralIdentifier": {
+      "pattern": "\\p{L}(?:(?:[\\p{L}\\p{Nd}]|_))*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 104
+      }
+    },
+    "TypeName": {
+      "pattern": "\\p{L}(?:(?:[\\p{L}\\p{Nd}]|_))*(?:\\.\\p{L}(?:(?:[\\p{L}\\p{Nd}]|_))*)*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 135
+      }
+    },
+    "HexadecimalUnsignedLong": {
+      "pattern": "0x(?:[0123456789ABCDEFabcdef])+(?:_(?:[0123456789ABCDEFabcdef])+)*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 81
+      }
+    },
+    "DecimalUnsignedLong": {
+      "pattern": "\\p{Nd}+(?:_\\p{Nd}+)*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 71
+      }
+    },
+    "HexadecimalNumberWithSign": {
+      "pattern": "(?:\\-)?0x(?:[0123456789ABCDEFabcdef])+(?:_(?:[0123456789ABCDEFabcdef])+)*",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 90
+      }
+    },
+    "DecimalNumberWithSign": {
+      "pattern": "(?:\\-)?\\p{Nd}+(?:_\\p{Nd}+)*(?:\\.\\p{Nd}+)?",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 96
+      }
+    },
+    "Number": {
+      "pattern": "(?:(?:\\-)?0x(?:[0123456789ABCDEFabcdef])+(?:_(?:[0123456789ABCDEFabcdef])+)*|(?:\\-)?\\p{Nd}+(?:_\\p{Nd}+)*(?:\\.\\p{Nd}+)?)",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 101
+      }
+    },
+    "RightArrow": {
+      "pattern": "\\->",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 60
+      }
+    },
+    "MultiplexSign": {
+      "pattern": "\\|",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 29
+      }
+    },
+    "AtSign": {
+      "pattern": "@",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 27
+      }
+    },
+    "Separator": {
+      "pattern": ";",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 25
+      }
+    },
+    "Comma": {
+      "pattern": ",",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 33
+      }
+    },
+    "Colon": {
+      "pattern": ":",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 31
+      }
+    },
+    "QuotationMark": {
+      "pattern": "\"",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 52
+      }
+    },
+    "MultiQuotationMark": {
+      "pattern": "'''",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 54
+      }
+    },
+    "EscapeCharacter": {
+      "pattern": "\\\\",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 56
+      }
+    },
+    "DecimalSign": {
+      "pattern": "(?:\\-)?",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 96
+      }
+    },
+    "DecimalMagnitude": {
+      "pattern": "\\p{Nd}+(?:_\\p{Nd}+)*(?:\\.\\p{Nd}+)?",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 97
+      }
+    },
+    "MonitorSuffix": {
+      "pattern": "add",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 293
+      }
+    },
+    "Identifier": {
+      "pattern": "(?:[^\\P{L}FTaefilnprtu][\\p{L}\\p{Nd}_]*|F(?:(?:[^\\P{L}a]|[^\\P{Nd}a]|_)[\\p{L}\\p{Nd}_]*||a(?:(?:[^\\P{L}l]|[^\\P{Nd}l]|_)[\\p{L}\\p{Nd}_]*||l(?:(?:[^\\P{L}s]|[^\\P{Nd}s]|_)[\\p{L}\\p{Nd}_]*||s(?:(?:[^\\P{L}e]|[^\\P{Nd}e]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*)))))|T(?:(?:[^\\P{L}r]|[^\\P{Nd}r]|_)[\\p{L}\\p{Nd}_]*||r(?:(?:[^\\P{L}u]|[^\\P{Nd}u]|_)[\\p{L}\\p{Nd}_]*||u(?:(?:[^\\P{L}e]|[^\\P{Nd}e]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*))))|a(?:(?:[^\\P{L}s]|[^\\P{Nd}s]|_)[\\p{L}\\p{Nd}_]*||s(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*))|e(?:(?:[^\\P{L}m]|[^\\P{Nd}m]|_)[\\p{L}\\p{Nd}_]*||m(?:(?:[^\\P{L}p]|[^\\P{Nd}p]|_)[\\p{L}\\p{Nd}_]*||p(?:(?:[^\\P{L}t]|[^\\P{Nd}t]|_)[\\p{L}\\p{Nd}_]*||t(?:(?:[^\\P{L}y]|[^\\P{Nd}y]|_)[\\p{L}\\p{Nd}_]*||y(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*)))))|f(?:(?:[^\\P{L}a]|[^\\P{Nd}a]|_)[\\p{L}\\p{Nd}_]*||a(?:(?:[^\\P{L}l]|[^\\P{Nd}l]|_)[\\p{L}\\p{Nd}_]*||l(?:(?:[^\\P{L}s]|[^\\P{Nd}s]|_)[\\p{L}\\p{Nd}_]*||s(?:(?:[^\\P{L}e]|[^\\P{Nd}e]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*)))))|i(?:(?:[^\\P{L}n]|[^\\P{Nd}n]|_)[\\p{L}\\p{Nd}_]*||n(?:(?:[^\\P{L}i]|[^\\P{Nd}i]|_)[\\p{L}\\p{Nd}_]*||i(?:(?:[^\\P{L}t]|[^\\P{Nd}t]|_)[\\p{L}\\p{Nd}_]*||t(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*))))|l(?:(?:[^\\P{L}o]|[^\\P{Nd}o]|_)[\\p{L}\\p{Nd}_]*||o(?:(?:[^\\P{L}c]|[^\\P{Nd}c]|_)[\\p{L}\\p{Nd}_]*||c(?:(?:[^\\P{L}a]|[^\\P{Nd}a]|_)[\\p{L}\\p{Nd}_]*||a(?:(?:[^\\P{L}l]|[^\\P{Nd}l]|_)[\\p{L}\\p{Nd}_]*||l(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*)))))|n(?:(?:[^\\P{L}eo]|[^\\P{Nd}eo]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}w]|[^\\P{Nd}w]|_)[\\p{L}\\p{Nd}_]*||w(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*))|o(?:(?:[^\\P{L}n]|[^\\P{Nd}n]|_)[\\p{L}\\p{Nd}_]*||n(?:(?:[^\\P{L}e]|[^\\P{Nd}e]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*))))|p(?:(?:[^\\P{L}r]|[^\\P{Nd}r]|_)[\\p{L}\\p{Nd}_]*||r(?:(?:[^\\P{L}e]|[^\\P{Nd}e]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}i]|[^\\P{Nd}i]|_)[\\p{L}\\p{Nd}_]*||i(?:(?:[^\\P{L}n]|[^\\P{Nd}n]|_)[\\p{L}\\p{Nd}_]*||n(?:(?:[^\\P{L}i]|[^\\P{Nd}i]|_)[\\p{L}\\p{Nd}_]*||i(?:(?:[^\\P{L}t]|[^\\P{Nd}t]|_)[\\p{L}\\p{Nd}_]*||t(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*)))))))|r(?:(?:[^\\P{L}e]|[^\\P{Nd}e]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}s]|[^\\P{Nd}s]|_)[\\p{L}\\p{Nd}_]*||s(?:(?:[^\\P{L}e]|[^\\P{Nd}e]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}t]|[^\\P{Nd}t]|_)[\\p{L}\\p{Nd}_]*||t(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*)))))|t(?:(?:[^\\P{L}r]|[^\\P{Nd}r]|_)[\\p{L}\\p{Nd}_]*||r(?:(?:[^\\P{L}u]|[^\\P{Nd}u]|_)[\\p{L}\\p{Nd}_]*||u(?:(?:[^\\P{L}e]|[^\\P{Nd}e]|_)[\\p{L}\\p{Nd}_]*||e(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*))))|u(?:(?:[^\\P{L}s]|[^\\P{Nd}s]|_)[\\p{L}\\p{Nd}_]*||s(?:(?:[^\\P{L}i]|[^\\P{Nd}i]|_)[\\p{L}\\p{Nd}_]*||i(?:(?:[^\\P{L}n]|[^\\P{Nd}n]|_)[\\p{L}\\p{Nd}_]*||n(?:(?:[^\\P{L}g]|[^\\P{Nd}g]|_)[\\p{L}\\p{Nd}_]*||g(?:(?:[^\\P{L}]|[^\\P{Nd}]|_)[\\p{L}\\p{Nd}_]*))))))",
+      "source": {
+        "repository": "renode",
+        "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+        "line": 132
+      }
+    }
+  },
+  "indent": {
+    "value": 4,
+    "source": {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/PreLexer.cs",
+      "line": 401
+    }
+  },
+  "quote": {
+    "value": "\"",
+    "source": {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/PreLexer.cs",
+      "line": 402
+    }
+  },
+  "multiquote": {
+    "value": "'''",
+    "source": {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/PreLexer.cs",
+      "line": 403
+    }
+  },
+  "escape": {
+    "value": "\\",
+    "source": {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+      "line": 56
+    }
+  },
+  "line_comment": {
+    "value": "//",
+    "source": {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/PreLexer.cs",
+      "line": 316
+    }
+  },
+  "block_start": {
+    "value": "/*",
+    "source": {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/PreLexer.cs",
+      "line": 312
+    }
+  },
+  "block_end": {
+    "value": "*/",
+    "source": {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/PreLexer.cs",
+      "line": 207
+    }
+  },
+  "monitor_suffix": {
+    "pattern": "add",
+    "source": {
+      "repository": "renode",
+      "path": "src/Renode/PlatformDescription/Syntax/Grammar.cs",
+      "line": 293
+    }
+  }
+}

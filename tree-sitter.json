@@ -8,12 +8,21 @@
       "file-types": [
         "resc"
       ]
+    },
+    {
+      "name": "repl",
+      "camelcase": "Repl",
+      "scope": "source.renode.repl",
+      "path": "tree-sitter/repl",
+      "file-types": [
+        "repl"
+      ]
     }
   ],
   "metadata": {
     "version": "0.1.0",
     "license": "MIT",
-    "description": "Renode monitor scripts",
+    "description": "Renode platform descriptions and monitor scripts",
     "authors": [
       {
         "name": "kubijo"

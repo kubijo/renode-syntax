@@ -1,0 +1,42 @@
+// Review fixture: indentation, explicit braces, monitor and Python injections.
+using "platforms/cpus/example.repl"
+
+local memory: Memory.MappedMemory @ sysbus <0x1000, +0x1000> as "ram"
+    size: 0x1000
+
+sysbus:
+    init:
+        echo "monitor syntax in an indented block"
+        Tag <0x1000 4> "review" // Platform comment, outside the monitor injection.
+        python """
+value = {"name": "nested Python"}
+for key, item in value.items():
+    print(key, item)
+"""
+    reset add:
+        echo "reset ends before the next platform entry"
+
+device: Python.PythonPeripheral @ sysbus 0x2000
+    script: '''
+def on_read(request):
+    if request.offset == 0:
+        return 42
+    return 0
+'''
+    size: 0x100
+
+explicit: Example.Device @ { sysbus 0x3000; sysbus 0x4000 } {
+    enabled: True;
+    init: {
+        echo "quoted braces { } stay inside monitor strings"
+        python """
+def greet(name):
+    return "hello " + name
+print(greet("Zed"))
+"""
+    };
+    reset: { echo "explicit reset" }
+}
+
+after: Example.Device @ sysbus 0x5000
+    enabled: false

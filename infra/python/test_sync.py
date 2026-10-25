@@ -52,6 +52,17 @@ def write_products(root: Path, pins: Pins) -> None:
 
 
 class ProposalTests(unittest.TestCase):
+    def test_product_collection_includes_platform_parser_scanner_and_generated_queries(self) -> None:
+        products = sync_model.products(ROOT)
+        for name in (
+            'tree-sitter/repl/src/parser.c',
+            'tree-sitter/repl/src/scanner.c',
+            'tree-sitter/repl/src/scanner-config.h',
+            'generated/repl.json',
+            'zed/languages/repl/brackets.scm',
+        ):
+            self.assertIn(name, products)
+
     def test_patch_covers_changed_added_and_deleted_products(self) -> None:
         names, difference = sync_model.patch({'old': b'old\n', 'same': b'x\n'}, {'new': b'new\n', 'same': b'x\n'})
         self.assertEqual(names, ('new', 'old'))

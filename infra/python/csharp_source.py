@@ -128,7 +128,7 @@ class Document:
 class ByteParser(Protocol):
     # tree-sitter 0.26's removed ByteString annotation is unresolved on Python 3.15. Bind only
     # the bytes overload used here; keep the rest of the upstream Node/Tree typing.
-    def parse(self, source: bytes, /) -> Tree: ...
+    def parse(self, source: bytes, /, old_tree: Tree | None = None) -> Tree: ...
 
 
 def parse(repository: Literal['renode', 'infrastructure'], path: str, source: bytes) -> Document:

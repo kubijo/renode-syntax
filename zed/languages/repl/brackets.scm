@@ -1,0 +1,5 @@
+((block_start) @open (block_end) @close)
+("[" @open "]" @close)
+("<" @open ">" @close)
+(string "\"" @open (string_end) @close)
+(multiline_string "'''" @open (multiline_end) @close)

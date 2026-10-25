@@ -16,10 +16,10 @@ runner:
 corpus:
     @renode-test-corpus
 
-# Run the monitor grammar's Tree-sitter corpus fixtures.
-parser:
-    @renode-test-parser
+# Run the Tree-sitter grammar fixtures.
+parser grammar="all":
+    @renode-test-parser --grammar {{ grammar }}
 
-# Parse the pinned monitor scripts with Tree-sitter (offline).
-parser-corpus:
-    @renode-test-parser-corpus
+# Parse pinned scripts, platform descriptions and embedded monitor bodies (offline).
+parser-corpus grammar="all":
+    @renode-test-parser-corpus --grammar {{ grammar }}
