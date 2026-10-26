@@ -1,0 +1,20 @@
+# Review fixture: check commands, comments, macros, paths, and embedded Python.
+:name: Renode syntax review
+
+using sysbus
+mach create "review"
+machine LoadPlatformDescription @platforms/cpus/example.repl
+
+$image?=@https://example.com/firmware.elf
+macro load
+"""
+    sysbus LoadELF $image
+"""
+
+python """
+values = {"nested": 42}
+for name, value in values.items():
+    print(name, value)
+"""
+
+runMacro $load

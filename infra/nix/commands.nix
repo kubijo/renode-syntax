@@ -275,6 +275,9 @@ commands
 }
 // {
   doctor = command "doctor" "doctor";
+  sublime-review = pkgs.writeShellScriptBin "renode-sublime-review" ''
+    exec "$RENODE_SYNTAX_ROOT/infra/sublime/review.sh" "$@"
+  '';
   emacs-review = pkgs.writeShellApplication {
     name = "renode-emacs-review";
     text = ''

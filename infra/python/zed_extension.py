@@ -45,7 +45,7 @@ def prepare(root: Path, compiler: Path, console: Console) -> Path:
     for name in GRAMMARS:
         prepare_grammar(root, destination, metadata, revision, name, compiler)
     _ = (destination / 'extension.toml').write_bytes(msgspec.toml.encode(metadata))
-    _ = shutil.copy2(root / 'infra/zed/review.repl', root / '.tmp/zed/review.repl')
+    _ = shutil.copy2(root / 'infra/fixtures/review.repl', root / '.tmp/zed/review.repl')
     link = root / '.tmp/zed/extension'
     if link.is_symlink():
         link.unlink()

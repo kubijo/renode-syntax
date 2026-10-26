@@ -1,0 +1,5 @@
+import '../../infra/just/prelude.just'
+
+# Open Sublime Merge with the working grammars and review fixtures.
+review file="":
+    @renode-sublime-review {{ quote(file) }}

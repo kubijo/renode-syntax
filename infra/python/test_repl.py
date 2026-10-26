@@ -106,7 +106,7 @@ class PlatformTests(unittest.TestCase):
         self.assertEqual(python, ['print("Python")'])
 
     def test_monitor_fragments_identify_the_same_host_across_comment_gaps(self) -> None:
-        source = (ROOT / 'infra/zed/review.repl').read_text()
+        source = (ROOT / 'infra/fixtures/review.repl').read_text()
         tree = self.parse(source)
         body = next(walk(tree.root_node, 'monitor_body'))
         fragments = tuple(walk(body, 'monitor_text'))
@@ -122,7 +122,7 @@ class PlatformTests(unittest.TestCase):
             self.assertTrue(all(host == body for host in hosts))
 
     def test_review_fixture_exercises_both_injections_and_both_block_modes(self) -> None:
-        source = (ROOT / 'infra/zed/review.repl').read_text()
+        source = (ROOT / 'infra/fixtures/review.repl').read_text()
         tree = self.parse(source)
         query = Query(self.grammar.language, (ROOT / 'integrations/zed/languages/repl/injections.scm').read_text())
         groups = monitor_ranges(ROOT, self.grammar, tree)

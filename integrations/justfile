@@ -5,3 +5,6 @@ mod zed
 
 # Emacs native grammars.
 mod emacs
+
+# Sublime Merge review with the working grammars.
+mod sublime

@@ -28,7 +28,7 @@ def prepare(root: Path, arguments: Arguments) -> None:
     python = directory / ('libtree-sitter-python' + arguments.suffix)
     python.unlink(missing_ok=True)
     python.symlink_to(arguments.python_grammar.resolve(strict=True))
-    _ = shutil.copyfile(root / 'infra/zed/review.repl', root / '.tmp/emacs/review.repl')
+    _ = shutil.copyfile(root / 'infra/fixtures/review.repl', root / '.tmp/emacs/review.repl')
 
     def quoted(path: Path) -> str:
         return msgspec.json.encode(path.as_posix()).decode()

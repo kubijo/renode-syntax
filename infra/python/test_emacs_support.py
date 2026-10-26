@@ -19,7 +19,7 @@ class EmacsPreparationTests(unittest.TestCase):
             grammar = root / 'parser.so'
             _ = grammar.write_bytes(b'parser')
             grammar.chmod(0o444)
-            fixture = root / 'infra/zed/review.repl'
+            fixture = root / 'infra/fixtures/review.repl'
             fixture.parent.mkdir(parents=True)
             _ = fixture.write_text('device:\n')
             with patch('emacs_support.build', return_value=grammar):

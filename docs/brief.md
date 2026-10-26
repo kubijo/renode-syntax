@@ -17,8 +17,8 @@ sync guard the grammars. [Agent instructions](../.ai/instructions.md) own the wo
   `renode/renode` `scripts/monitor.py`. Short aliases are intentionally unhighlighted because they collide with
   peripheral names. Script-local `mc_*` functions are not general commands.
 - The original Sublime grammars and syntect runner came from `kubijo/sublime-merge-plugins` at `8e2b145`. Preserve their
-  scopes and behavior where possible. Sublime Merge itself has not been verified; its engine may handle cross-syntax
-  includes or indentation backreferences differently from syntect.
+  scopes and behavior where possible. Review cross-syntax includes and indentation backreferences in Sublime Merge as
+  well as syntect; the engines may handle them differently.
 - `kubijo/xiaomi-fans` `tools/renode/` supplies real `.repl` and `.resc` corpus examples.
 
 The repository uses MIT. Keep Renode's applicable copyright and MIT notices in [NOTICE](../NOTICE). The upstream

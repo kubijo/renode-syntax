@@ -81,11 +81,12 @@ let
         format = {
           # Include new files without traversing ignored caches.
           walk = "git";
-          # Preserve migrated grammars and assertion columns.
+          # Preserve rendered grammars and assertion columns.
           exclude = [
             # Linked worktrees have a .git pointer file.
             ".git"
-            "integrations/sublime/**"
+            "integrations/sublime/*.sublime-syntax"
+            "integrations/sublime/syntax_test_*"
             # Parser generation owns these outputs.
             "tree-sitter/*/src/**"
             "integrations/emacs/renode-ts-data.el"
