@@ -29,6 +29,7 @@
     "printenv"
     "python"
     "quit"
+    "repeatLast"
     "require"
     "resd"
     "reverseExecMode"

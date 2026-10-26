@@ -33,10 +33,10 @@ variables:
     (?x:
       alias|allowPrivates|analyzers|autoSave|createPlatform|currentTime|displayImage|execute
       |help|include|lastLog|log|logFile|logLevel|logNetwork|mach|macro|numbersMode|path
-      |pause|peripherals|printenv|python|quit|require|resd|reverseExecMode|runMacro|set
-      |setAndRevertAfter|showAnalyzer|start|string|tags|using|verboseMode|version|watch
-      |console_log|dump|dump_file|echo|get_environ|if|next_value|print|pyprint|sleep
-      |str_contains|uart_connect
+      |pause|peripherals|printenv|python|quit|repeatLast|require|resd|reverseExecMode
+      |runMacro|set|setAndRevertAfter|showAnalyzer|start|string|tags|using|verboseMode
+      |version|watch|console_log|dump|dump_file|echo|get_environ|if|next_value|print|pyprint
+      |sleep|str_contains|uart_connect
     )
 
 contexts:
