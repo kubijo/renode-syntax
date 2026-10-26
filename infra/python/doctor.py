@@ -79,7 +79,11 @@ def inspect_tool(tool: Tool, version: str | None = None) -> Report:
             return Report(tool.name, 'unknown', location, tool.origin, 'version command failed')
         version = output.splitlines()[0]
     problem = None
-    if tool.origin != 'host bootstrap' and not location.resolve().is_relative_to('/nix/store'):
+    if tool.origin not in (
+        'host bootstrap',
+        'developer configuration',
+        'developer installation',
+    ) and not location.resolve().is_relative_to('/nix/store'):
         problem = 'expected a Nix-provided executable'
     return Report(tool.name, version, location, tool.origin, problem)
 
@@ -138,6 +142,11 @@ def run(root: Path, console: Console) -> int:
         Tool('wasi-clang', 'Nix WASI toolchain', executable=str(Path(os.environ['WASI_SDK_PATH']) / 'bin/clang')),
     )
     reports = tuple(inspect_tool(tool) for tool in tools)
+    wrapper = os.environ.get('RUSTC_WRAPPER')
+    if wrapper:
+        reports += (inspect_tool(Tool('RUSTC_WRAPPER', 'developer configuration', executable=wrapper)),)
+    elif shutil.which('sccache') is not None:
+        reports += (inspect_tool(Tool('sccache', 'developer installation')),)
     if shutil.which('zed') is not None:
         reports += (inspect_tool(Tool('zed', 'host bootstrap')),)
     release = next(pin.version for pin in pins if pin.name == 'nix-tools')

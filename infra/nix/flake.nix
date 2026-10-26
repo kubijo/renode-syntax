@@ -79,13 +79,14 @@ let
         ];
 
         format = {
-          walk = "filesystem";
-          # Preserve the migrated grammars and assertion columns byte-for-byte.
+          # Include new files without traversing ignored caches.
+          walk = "git";
+          # Preserve migrated grammars and assertion columns.
           exclude = [
-            # A linked worktree has a .git pointer file rather than a directory.
+            # Linked worktrees have a .git pointer file.
             ".git"
             "integrations/sublime/**"
-            # These are reproduced by the parser generator, including its scanner copy.
+            # Parser generation owns these outputs.
             "tree-sitter/*/src/**"
             "integrations/emacs/renode-ts-data.el"
           ];
@@ -126,6 +127,7 @@ let
             ".envrc"
           ];
           whitespace.includes = [
+            ".elpaignore"
             ".gitignore"
             "LICENSE"
             "NOTICE"
@@ -162,6 +164,7 @@ let
             ".envrc"
           ];
           whitespace.includes = [
+            ".elpaignore"
             ".gitignore"
             "LICENSE"
             "NOTICE"

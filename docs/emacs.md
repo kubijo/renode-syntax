@@ -11,5 +11,5 @@ For an existing session, load `.tmp/emacs/setup.el` with `M-x load-file`, then o
 pinned corpus under `.tmp/corpus/input/`. After Lisp edits, reload the setup and run `M-x normal-mode` in open Renode
 buffers. After grammar edits, repeat preparation and restart Emacs to discard cached libraries.
 
-The [brief](brief.md#grammars-and-editor-support) owns mode behavior and limitations. Review highlighting, editing and
+The [brief](brief.md#grammar-and-editor-behavior) owns mode behavior and limitations. Review highlighting, editing and
 commenting in your Emacs configuration; automated tests exercise the native parsers and faces.

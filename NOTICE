@@ -42,8 +42,8 @@ THE SOFTWARE.
 
 Tree-sitter attribution
 
-The generated parser's support headers in tree-sitter/resc/src/tree_sitter/
-come from Tree-sitter v0.26.8:
+The generated parsers' support headers in tree-sitter/resc/src/tree_sitter/
+and tree-sitter/repl/src/tree_sitter/ come from Tree-sitter v0.26.8:
 
   https://github.com/tree-sitter/tree-sitter/tree/v0.26.8
 

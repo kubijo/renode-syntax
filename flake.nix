@@ -1,5 +1,5 @@
 {
-  description = "Renode syntax support for Sublime Text, bat, and Zed";
+  description = "Renode syntax support for Sublime Text, bat, Zed, and Emacs";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";

@@ -10,7 +10,7 @@ compiler.
 
 Install directly from this repository with Emacs's built-in `package-vc-install`; MELPA is not needed. Evaluate this
 form once in Emacs to install the Lisp package and register both Renode grammar sources from the same checkout. `nil`
-selects the latest published revision; replace it with a commit hash to select a fixed revision.
+selects the current default-branch commit; replace it with a commit hash to select a fixed revision.
 
 ```elisp
 (let ((revision nil)
