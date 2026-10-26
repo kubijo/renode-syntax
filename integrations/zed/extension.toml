@@ -8,10 +8,10 @@ repository = "https://github.com/kubijo/renode-syntax"
 
 [grammars.resc]
 repository = "https://github.com/kubijo/renode-syntax"
-rev = "main"
+rev = "7547e8776e98766c67b6435aa842b670913fe0c3"
 path = "tree-sitter/resc"
 
 [grammars.repl]
 repository = "https://github.com/kubijo/renode-syntax"
-rev = "main"
+rev = "7547e8776e98766c67b6435aa842b670913fe0c3"
 path = "tree-sitter/repl"

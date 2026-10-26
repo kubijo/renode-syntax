@@ -9,8 +9,9 @@ Dev Extension** and select `.tmp/zed/extension`. Open `.tmp/zed/review.repl` to 
 monitor bodies, nested Python and the return to platform syntax. Use the pinned corpus under `.tmp/corpus/input/` for
 broader review of commands, macros, brackets and outlines. Python highlighting needs Zed's Python language support.
 
-The tracked manifest uses the development branch; the prepared manifest uses the local repository at its current commit.
-Publishing requires a separate decision and a grammar revision containing the generated `src/` files.
+The tracked manifest pins a grammar revision containing the generated `src/` files. The prepared manifest instead uses
+the local repository at its current commit; review the tracked manifest from the exact release checkout before
+submitting it to the registry.
 
 Automated checks compile queries and test native parse and capture boundaries. Review rendering, injection integration
 and interactive editing in Zed at the phase gate.
