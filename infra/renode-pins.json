@@ -1,7 +1,7 @@
 {
   "renode": {
     "repository": "https://github.com/renode/renode.git",
-    "revision": "04cafbb29ea64a1547cd3bd1232f8c126bf7f755",
+    "revision": "731b0653b5210469b2a39286cf818a59e3d872d9",
     "paths": [
       "LICENSE",
       "scripts/monitor.py",
@@ -11,7 +11,7 @@
   },
   "infrastructure": {
     "repository": "https://github.com/renode/renode-infrastructure.git",
-    "revision": "32dce7d28bc267761b3ef0e49eaf1720be54b265",
+    "revision": "56fb074ba85c12ed5f491ffe31c5a38153eb8b0a",
     "paths": [
       "licenses/MIT.txt",
       "src/Emulator/Extensions/UserInterface/Commands",
